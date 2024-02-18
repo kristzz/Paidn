@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root{
+  /* Colors for everything */
+  --color-orange: #FFA500;
+  --color-red: #FF4500;
+  --color-orange: #FF6347;
+  --color-lightorange: #FF8C00;
+  --color-yellow: #FFD700;
+  
+
+  --font: 'Inter';
+
+  --font-light: 200;
+  --font-regular: 400;
+  --font-bold: 600;
+
+  --font-large: 3.5rem;
+  --font-regular: 2rem;
+  --font-text: 1rem;
+}
+/* default classes */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html{
+  font-family: var(--font);
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+}
+
+button{
+  border: 0;
+}
+
+input{
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+router-link{
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.weight-light{
+  font-weight: var(--font-light);
+}
+
+.weight-regular{
+  font-weight: var(--font-regular);
+}
+
+.weight-bold{
+  font-weight: var(--font-bold);
+}
+
+.height-large{
+  font-size: var(--font-large);
+}
+
+.height-regular{
+  font-size: var(--font-regular);
+}
+
+.height-text{
+  font-size: var(--font-text);
+}
