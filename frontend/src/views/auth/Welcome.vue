@@ -14,44 +14,24 @@
         <div id="register" class="btn">
             <router-link :to="{name:'register'}">Try for free!</router-link>
         </div>
-        <div v-for="circle in circles" :key="circle.id" :id="circle.id" class="circle" :style="{ left: circle.left, top: circle.top, background: circle.color, zIndex: -1 }"></div>
     </main>
 </template>
 
 <script lang="ts">
-export default {
-  data() {
-    return {
-      circles: [],
-    };
-  },
-  mounted() {
-    this.generateCircles();
-  },
-  methods: {
-    generateCircles() {
-      const colors = ['var(--color-orange)', 'var(--color-red)', 'var(--color-orange)', 'var(--color-lightorange)', 'var(--color-yellow)'];
-      const count = 14;
-      const circleSize = 2.5; // The size of the circle in vw/vh units
-
-      for (let i = 0; i < count; i++) {
-        const color = colors[i % colors.length];
-        const left = Math.floor(Math.random() * (90 - circleSize)) + 5 + 'vw'; // 5vw offset and 90vw range
-        const top = Math.floor(Math.random() * (90 - circleSize)) + 5 + 'vh'; // 5vh offset and 90vh range
-
-        this.circles.push({ id: 'circle' + (i + 1), color, left, top });
-      }
-    },
-  },
-};
+    export default {
+        
+    }
 </script>
 
 <style scoped>
     main{
         display: flex;
+        position: absolute;
         flex-direction: column;
         align-items: center;
-        padding-top: 4rem;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
     }
     router-link{
         text-decoration: none;
@@ -66,9 +46,11 @@ export default {
         width: 75vw;
     }
     #main-text{
-        padding: 1rem 0 0 1rem;
+        padding: 0 5rem 0 5rem;
+        margin-bottom: 3rem;
     }
     #secondary-text{
+        padding: 0 3rem 0 3rem;
         opacity: 0.7;
     }
     #login{
@@ -93,27 +75,5 @@ export default {
     }
     .btn a{
         text-decoration: none;
-    }
-
-    .circle {
-        position: absolute;
-        width:   50px;
-        height:   50px;
-        border-radius:   50%;
-    }
-    #circle1 {
-        background: var(--color-orange);
-    }
-    #circle2 {
-        background: var(--color-red);
-    }
-    #circle3 {
-        background: var(--color-orange);
-    }
-    #circle4 {
-        background: var(--color-lightorange);
-    }
-    #circle5 {
-        background: var(--color-yellow);
     }
 </style>

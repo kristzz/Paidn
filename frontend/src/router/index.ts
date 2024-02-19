@@ -1,9 +1,12 @@
-import path from 'path'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/',
+      redirect: '/welcome'
+    },
     {
       path: '/welcome',
       name: 'welcome',
@@ -19,11 +22,14 @@ const router = createRouter({
       name: 'register',
       component: () => import('../views/auth/Register.vue')
     },
+    {
+      path: '/forgotPassword',
+      name: 'forgotPassword',
+      component: () => import('../views/auth/ForgotPassword.vue')
+    },
+    
   ]
 })
 
-if (path === '/' || path === ''){
-  router.push('/welcome')
-}
 
 export default router

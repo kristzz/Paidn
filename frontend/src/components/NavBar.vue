@@ -1,3 +1,4 @@
+<!--
 <script lang="ts">
 
 </script>
@@ -42,5 +43,19 @@ a{
 a:hover, p:hover{
     transform: scale(1.02);
 }
+
+</style>
+-->
+<template>
+  
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style>
 
 </style>
