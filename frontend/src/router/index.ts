@@ -19,17 +19,25 @@ const router = createRouter({
     },
     {
       path: '/register',
-      name: 'register',
-      component: () => import('../views/auth/Register.vue')
+      name: 'typeOfAcc',
+      component: () => import('../views/auth/TypeOfAcc.vue')
+    },
+    {
+      path: '/register/user',
+      name: 'userRegistration',
+      component: () => import('../views/auth/Register/UserRegistration.vue')
+    },
+    {
+      path: '/register/business',
+      name: 'businessRegistration',
+      component: () => import('../views/auth/Register/BusinessRegistration.vue')
     },
     {
       path: '/forgotPassword',
       name: 'forgotPassword',
       component: () => import('../views/auth/ForgotPassword.vue')
-    },
-    
+    }
   ]
 })
-
 
 export default router

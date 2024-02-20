@@ -1,104 +1,62 @@
 <template>
-    <main>
-        <h2>Forgot Password</h2>
-        <div id="loginInput" class="input-icon">
-                  <label for="email">Email:</label><br>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
-                      <path d="M3 8L8.44992 11.6333C9.73295 12.4886 10.3745 12.9163 11.0678 13.0825C11.6806 13.2293 12.3194 13.2293 12.9322 13.0825C13.6255 12.9163 14.2671 12.4886 15.5501 11.6333L21 8M6.2 19H17.8C18.9201 19 19.4802 19 19.908 18.782C20.2843 18.5903 20.5903 18.2843 20.782 17.908C21 17.4802 21 16.9201 21 15.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.07989 19 6.2 19Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                  <input type="email" id="email" class="input" placeholder="youremail@email.com" v-model="email" required>
-              </div>
-        <div id="buttonPlacement">
-            <button id="sendBtn">Send Email</button>
-        </div>
-        
-        <div id="registerInstead">
-            <p>Remember your password?</p>
-            <div id="registerInsteadBtn">
-                <router-link :to="{name:'login'}">Login!</router-link>
-            </div>
-        </div>
-    </main>
+  <main>
+    <h2>Forgot Password</h2>
+    <div id="loginInput" class="input-icon">
+      <label for="email">Email:</label><br />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="800px"
+        height="800px"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <path
+          d="M3 8L8.44992 11.6333C9.73295 12.4886 10.3745 12.9163 11.0678 13.0825C11.6806 13.2293 12.3194 13.2293 12.9322 13.0825C13.6255 12.9163 14.2671 12.4886 15.5501 11.6333L21 8M6.2 19H17.8C18.9201 19 19.4802 19 19.908 18.782C20.2843 18.5903 20.5903 18.2843 20.782 17.908C21 17.4802 21 16.9201 21 15.8V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.07989 19 6.2 19Z"
+          stroke="#000000"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <input
+        type="email"
+        id="email"
+        class="input"
+        placeholder="youremail@email.com"
+        v-model="email"
+        required
+      />
+    </div>
+    <div id="buttonPlacement">
+      <button id="sendBtn">Send Email</button>
+    </div>
+
+    <div id="registerInstead">
+      <p>Remember your password?</p>
+      <div id="registerInsteadBtn">
+        <router-link :to="{ name: 'login' }">Login!</router-link>
+      </div>
+    </div>
+  </main>
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
 <style scoped>
-    main{
-        display: flex;
-        position: absolute;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-    }
+@import '../auth/auth.css';
 
-    h2{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 2rem;
-    }
+#registerInstead {
+  flex-direction: row;
+  margin-top: 1.5rem;
+}
 
-    #sendBtn{
-        width: 7rem;
-        height: 2rem;
-        background: black;
-        color: white;
-        margin-top: 2rem;
-        border-radius: 1rem;
-        cursor: pointer;
-    }
-
-    #registerInstead{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        margin-top: 1.5rem;
-    }
-
-    #registerInsteadBtn{
-        margin-left: 0.5rem;
-    }
-    #registerInsteadBtn > a{
-        color: black;
-    }
-
-    #buttonPlacement{
-        width: 17rem;
-        height: auto;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
-
-    .input{
-        width: 17rem;
-        height: 3rem;
-        border-bottom: 1px solid #000000;
-        padding-left: 2.5rem;
-        outline: none;
-    }
-
-    .input-icon {
-        position: relative;
-    }
-
-    .input-icon > svg {
-        position: absolute;
-        height: 1.25rem;
-        width: 1.25rem;
-        left: 0.625rem;
-        top: 2rem;
-    }
-
-    .input-icon > input {
-        padding-left: 2.5rem;
-    }
+#buttonPlacement {
+  width: 17rem;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
 </style>

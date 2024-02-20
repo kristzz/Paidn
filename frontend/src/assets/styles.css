@@ -1,13 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-:root{
+:root {
   /* Colors for everything */
-  --color-orange: #FFA500;
-  --color-red: #FF4500;
-  --color-orange: #FF6347;
-  --color-lightorange: #FF8C00;
-  --color-yellow: #FFD700;
-  
+  --color-orange: #ffa500;
+  --color-red: #ff4500;
+  --color-orange: #ff6347;
+  --color-lightorange: #ff8c00;
+  --color-yellow: #ffd700;
+
+  --color-white: #ffffff;
+  --color-black: #000000;
 
   --font: 'Inter';
 
@@ -29,49 +31,49 @@
   box-sizing: border-box;
 }
 
-html{
+html {
   font-family: var(--font);
   margin: 0;
   padding: 0;
   background-color: var(--background-color);
 }
 
-button{
+button {
   border: 0;
 }
 
-input{
+input {
   border: 0;
   padding: 0;
   margin: 0;
 }
 
-router-link{
+router-link {
   margin: 0;
   padding: 0;
   cursor: pointer;
 }
 
-.weight-light{
+.weight-light {
   font-weight: var(--font-light);
 }
 
-.weight-regular{
+.weight-regular {
   font-weight: var(--font-regular);
 }
 
-.weight-bold{
+.weight-bold {
   font-weight: var(--font-bold);
 }
 
-.height-large{
+.height-large {
   font-size: var(--font-large);
 }
 
-.height-regular{
+.height-regular {
   font-size: var(--font-regular);
 }
 
-.height-text{
+.height-text {
   font-size: var(--font-text);
 }
