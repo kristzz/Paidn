@@ -3,7 +3,7 @@
     <div class="login">
       <h2>Login</h2>
       <form @submit.prevent="submitForm">
-        <div id="loginInput" class="input-icon">
+        <div id="emailInput" class="input-icon">
           <label for="email">Email:</label><br />
           <svg
             xmlns="http://www.w3.org/2000/svg"

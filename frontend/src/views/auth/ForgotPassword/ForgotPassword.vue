@@ -1,7 +1,7 @@
 <template>
   <main>
     <h2>Forgot Password</h2>
-    <div id="loginInput" class="input-icon">
+    <div id="emailInput" class="input-icon">
       <label for="email">Email:</label><br />
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -45,8 +45,6 @@ export default {}
 </script>
 
 <style scoped>
-@import '../auth/auth.css';
-
 #registerInstead {
   flex-direction: row;
   margin-top: 1.5rem;
@@ -60,3 +58,5 @@ export default {}
   align-items: flex-start;
 }
 </style>
+
+<style src="../../auth/auth.css" scoped></style>

@@ -20,7 +20,7 @@ const router = createRouter({
     {
       path: '/register',
       name: 'typeOfAcc',
-      component: () => import('../views/auth/TypeOfAcc.vue')
+      component: () => import('../views/auth/Register/TypeOfAcc.vue')
     },
     {
       path: '/register/user',
@@ -35,7 +35,12 @@ const router = createRouter({
     {
       path: '/forgotPassword',
       name: 'forgotPassword',
-      component: () => import('../views/auth/ForgotPassword.vue')
+      component: () => import('../views/auth/ForgotPassword/ForgotPassword.vue')
+    },
+    {
+      path: '/forgotPassword/newPassword',
+      name: 'newPassword',
+      component: () => import('../views/auth/ForgotPassword/NewPassword.vue')
     }
   ]
 })
