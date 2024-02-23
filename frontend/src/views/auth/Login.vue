@@ -53,7 +53,7 @@
           />
         </div>
         <div class="button-container">
-          <button type="submit" id="sendBtn">Login</button>
+          <button type="submit" id="sendBtn">Login!</button>
           <div id="btn" class="btn">
             <router-link :to="{ name: 'forgotPassword' }">Forgot password?</router-link>
           </div>
@@ -89,7 +89,6 @@ export default {}
 }
 
 #btn a {
-  text-decoration: none;
   color: var(--color-black);
 }
 
