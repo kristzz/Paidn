@@ -2,7 +2,7 @@
     <main>
       <div class="register">
         <h2>Seize the moment and unlock your full potential by joining us now!</h2>
-        <form @submit.prevent="submitForm">
+        <form @submit.prevent="registerUser">
           <div id="emailInput" class="input-icon">
             <label for="email">Email:</label><br />
             <svg
@@ -25,7 +25,7 @@
               id="email"
               class="input"
               placeholder="youremail@email.com"
-              v-model="email"
+              v-model="formData.email"
               required
             />
           </div>
@@ -48,7 +48,7 @@
             id="password"
             class="input"
             placeholder="password"
-            v-model="password"
+            v-model="formData.password"
             required
           />
         </div>
@@ -71,7 +71,7 @@
             id="passwordConfirm"
             class="input"
             placeholder="password"
-            v-model="passwordConfirm"
+            v-model="formData.passwordConfirm"
             required
           />
         </div>
@@ -86,8 +86,35 @@
     </main>
   </template>
   
-  <script>
-  export default {}
+  <script lang="ts">
+  import axios from 'axios';
+  
+  export default {
+  data() {
+    return {
+      formData: {
+        email: '',
+        password: '',
+        passwordConfirm: ''
+      }
+    };
+  },
+  methods: {
+    async registerUser() {
+      if (this.formData.password !== this.formData.passwordConfirm) {
+        alert('Password and password confirmation do not match!');
+        return;
+      }
+      try {
+        const response = await axios.post('/register', this.formData);
+        console.log(response.data);
+      } catch (error : any) {
+        console.error(error.response.data);
+        alert(error);
+      }
+    }
+  }
+};
   </script>
   
   <style scoped>
