@@ -70,7 +70,31 @@
 </template>
 
 <script>
-export default {}
+import axios from 'axios';
+
+export default {
+  data(){
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    submitForm(){
+      axios.post('http://127.0.0.1:8000/api/login', {
+        email: this.email,
+        password: this.password
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error.response.data);
+      });
+    },
+  },
+};
+
 </script>
 
 <style scoped>
