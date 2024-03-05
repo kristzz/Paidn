@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\User;
 
-class ApiController extends Controller
+class UserController extends Controller
 {
     //Post
     public function register(Request $request){

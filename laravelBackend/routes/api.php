@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Api\ApiController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\BusinessController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,13 +22,19 @@ use App\Http\Controllers\Api\ApiController;
 // });
 
 // Open routes
-Route::post('/register', [ApiController::class, 'register']);
-Route::post('/login', [ApiController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
+
+Route::post('/bregister', [BusinessController::class, 'register']);
+Route::post('/blogin', [BusinessController::class, 'login']);
 
 // Protected routes
 Route::group([
     "middleware" => "auth:api"
 ], function (){
-    Route::get('/profile', [ApiController::class, 'profile']);
-    Route::get('/logout', [ApiController::class, 'logout']);
+    Route::get('/profile', [UserController::class, 'profile']);
+    Route::get('/logout', [UserController::class, 'logout']);
+
+    Route::get('/bprofile', [BusinessController::class, 'profile']);
+    Route::get('/blogout', [BusinessController::class, 'logout']);
 });
