@@ -14,13 +14,11 @@ class UserController extends Controller
     //Post
     public function register(Request $request){
         $request->validate([
-            'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed'
         ]);
 
         User::create([
-            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
