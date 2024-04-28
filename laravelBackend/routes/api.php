@@ -20,11 +20,11 @@ use App\Http\Controllers\Api\BusinessController;
 // Open routes
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-
 // Protected routes
 Route::group([
     "middleware" => "auth:api"
 ], function (){
     Route::get('/profile', [UserController::class, 'profile']);
     Route::get('/logout', [UserController::class, 'logout']);
+    Route::get('/deleteUser', [UserController::class, 'deleteUser']);
 });
