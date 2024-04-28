@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('regularUsers', function (Blueprint $table) {
-            $table->enum('gender', ['undisclosed','male', 'female', 'other'])->nullable();
             $table->string('name')->nullable();
             $table->string('secondName')->nullable();
             $table->string('surname')->nullable();
+            $table->enum('gender', ['undisclosed','male', 'female', 'other'])->nullable();
         });
     }
 
