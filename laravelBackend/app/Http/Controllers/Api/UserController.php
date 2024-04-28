@@ -79,12 +79,18 @@ class UserController extends Controller
     }
 
     public function deleteUser(){
-        $user = User::find($request->id);
-        $user->delete();
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
 
-        return response()->json([
-            'status' => true,
-            'message' => 'User deleted successfully'
-        ]);
+        try {
+            $user->delete();
+            auth()->user()->token()->revoke();
+
+            return response()->json(['message' => 'Account deleted successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }
