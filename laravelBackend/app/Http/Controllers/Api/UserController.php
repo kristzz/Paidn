@@ -15,12 +15,14 @@ class UserController extends Controller
     public function register(Request $request){
         $request->validate([
             'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'type' => 'required',
         ]);
 
         User::create([
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'type' => $request->type
         ]);
 
         return response()->json([
