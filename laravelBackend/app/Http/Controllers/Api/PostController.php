@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\Post;
 
@@ -18,18 +20,26 @@ class PostController extends Controller
             'salaryRangeHighest' => 'required',
         ]);
 
-        Post::create([
-            'title' => $request->title,
-            'jobDesc' => $request->jobDesc,
-            'profession' => $request->profession,
-            'salaryRangeLowest' => $request->salaryRangeLowest,
-            'salaryRangeHighest' => $request->salaryRangeHighest,
-        ]);
+        if (Auth::user()->type === 'business') {
+            Post::create([
+                'user_id' => Auth::user()->id,
+                'title' => $request->title,
+                'jobDesc' => $request->jobDesc,
+                'profession' => $request->profession,
+                'salaryRangeLowest' => $request->salaryRangeLowest,
+                'salaryRangeHighest' => $request->salaryRangeHighest,
+            ]);
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Post created successfully'
-        ]);
+            return response()->json([
+                'status' => true,
+                'message' => 'Post created successfully'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Only business users can create posts'
+            ]);
+        }
     }
 
     public function getPosts(){
