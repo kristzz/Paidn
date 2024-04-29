@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\BusinessController;
+use App\Http\Controllers\Api\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +27,8 @@ Route::group([
     Route::get('/profile', [UserController::class, 'profile']);
     Route::get('/logout', [UserController::class, 'logout']);
     Route::get('/deleteUser', [UserController::class, 'deleteUser']);
+
+    Route::post('/post', [PostController::class, 'post']);
+    Route::get('/getPosts', [PostController::class, 'getPosts']);
+    Route::get('/deletePost', [PostController::class, 'deletePost']);
 });
