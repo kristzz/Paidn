@@ -68,8 +68,6 @@ class UserController extends Controller
     }
 
     public function logout(){
-        $user = Auth::user();
-
         auth()->user()->token()->revoke();
 
         return response()->json([
@@ -80,9 +78,6 @@ class UserController extends Controller
 
     public function deleteUser(){
         $user = Auth::user();
-        if (!$user) {
-            return response()->json(['error' => 'Unauthenticated'], 401);
-        }
 
         try {
             $user->delete();

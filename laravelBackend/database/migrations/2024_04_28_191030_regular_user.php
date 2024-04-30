@@ -12,6 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('regularUsers', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('name')->nullable();
             $table->string('secondName')->nullable();
             $table->string('surname')->nullable();
