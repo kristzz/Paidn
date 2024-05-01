@@ -48,6 +48,8 @@ router-link {
   margin: 0;
   padding: 0;
   cursor: pointer;
+  color: var(--color-black);
+  text-decoration: none;
 }
 
 .weight-light {
@@ -72,4 +74,33 @@ router-link {
 
 .height-text {
   font-size: var(--font-text);
+}
+
+/* Custom elements */
+
+.input-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 20rem;
+}
+
+.small-input {
+  min-width: 16rem;
+  height: 2rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  margin: 0.75rem 2rem 0.75rem 2rem;
+  border-radius: 1rem;
+  border: 1px solid var(--color-black);
+}
+
+.authButton {
+  margin: 0.5rem 0rem 0.75rem 0rem;
+  padding: 0.25rem 0.75rem 0.25rem 0.75rem;
+  border: 1px solid var(--color-black);
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
 }
