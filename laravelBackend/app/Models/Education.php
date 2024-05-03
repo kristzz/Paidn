@@ -13,7 +13,7 @@ class Education extends Model
         'user_id',
         'educationProvider',
         'levelOfEducation',
-        'fieldOFStudy',
+        'fieldOfStudy',
         'description',
         'startDate',
         'endDate',
