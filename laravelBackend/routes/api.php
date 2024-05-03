@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\RegularUserController;
 use App\Http\Controllers\Api\EducationController;
+use App\Http\Controllers\Api\WorkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,8 @@ Route::group([
     Route::post('/addEducation', [EducationController::class, 'addEducation']);
     Route::get('/getEducation', [EducationController::class, 'getEducation']);
     Route::get('/deleteEducation', [EducationController::class, 'deleteEducation']);
+
+    Route::post('/addWorkExperience', [WorkController::class, 'addWorkExperience']);
+    Route::get('/getWorkExperience', [WorkController::class, 'getWorkExperience']);
+    Route::get('/deleteWorkExperience', [WorkController::class, 'deleteWorkExperience']);
 });
