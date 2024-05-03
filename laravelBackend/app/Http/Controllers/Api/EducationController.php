@@ -37,8 +37,9 @@ class EducationController extends Controller
         ]);
     }
 
-    public function getEducation(){
-        $education = Education::all();
+    public function getEducation(Request $request){
+        $user = Auth::user();
+        $education = $request->$user->education;
 
         return response()->json([
             'status' => true,
