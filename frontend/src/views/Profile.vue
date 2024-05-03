@@ -56,7 +56,6 @@ export default {
                 }
             }).then((response) => {
                 this.educationData = response.data.education;
-                console.log('Education Data Fetched:', this.educationData);
             }).catch((error) => {
                 console.log(error.message);
             });
