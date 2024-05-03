@@ -42,7 +42,7 @@ class UserController extends Controller
             'password' => $request->password
         ])){
             $user = Auth::user();
-            $token = $user->createToken('myToken')->accessToken;
+            $token = $user->createToken('authToken')->accessToken;
 
             return response()->json([
                 'status' => true,

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('businessType');
             $table->string('businessAddress')->nullable();
             $table->string('businessDescription')->nullable();
-            $table->rememberToken();
             $table->timestamps();
         });
     }
