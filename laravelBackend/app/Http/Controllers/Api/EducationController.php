@@ -39,8 +39,8 @@ class EducationController extends Controller
 
     public function getEducation(Request $request){
         $user = Auth::user();
-        $education = $request->$user->education;
 
+        $education = $user->education;
         return response()->json([
             'status' => true,
             'education' => $education
