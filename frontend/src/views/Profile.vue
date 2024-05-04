@@ -15,6 +15,9 @@
             <p>Level: {{ educationEntry.levelOfEducation }}</p>
         </div>
     </div>
+    <div v-else>
+        <p>Loading...</p>
+    </div>
 </template>
 
 <script>
