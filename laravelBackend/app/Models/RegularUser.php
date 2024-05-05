@@ -14,6 +14,7 @@ class RegularUser extends Model
         'name',
         'secondName',
         'surname',
+        'age',
         'gender'
     ];
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('secondName')->nullable();
             $table->string('surname')->nullable();
+            $table->integer('age')->nullable();
             $table->enum('gender', ['undisclosed','male', 'female', 'other'])->nullable();
             $table->timestamps();
         });
