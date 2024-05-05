@@ -38,7 +38,7 @@ class WorkController extends Controller
 
     public function getWorkExperience(Request $request){
         $user = Auth::user();
-        $work = $request->$user->work;
+        $work = $user->work;
 
         return response()->json([
             'status' => true,
