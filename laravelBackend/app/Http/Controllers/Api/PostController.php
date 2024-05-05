@@ -55,6 +55,35 @@ class PostController extends Controller
         ]);
     }
 
+    public function editPosts(Request $request){
+        $post = Post::find($request->id);
+
+        $request->validate([
+            'title' => 'required',
+            'jobDesc' => 'required',
+            'profession' => 'required',
+            'country' => 'required',
+            'location' => 'required',
+            'salaryRangeLowest' => 'required',
+            'salaryRangeHighest' => 'required',
+        ]);
+        if (Auth::user()->type === 'business') {
+            $post->title = $request->title;
+            $post->jobDesc = $request->jobDesc;
+            $post->profession = $request->profession;
+            $post->country = $request->country;
+            $post->location = $request->location;
+            $post->salaryRangeLowest = $request->salaryRangeLowest;
+            $post->salaryRangeHighest = $request->salaryRangeHighest;
+            $post->save();
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Only business users can edit posts'
+            ]);
+        }
+    }
+
     public function deletePost(Request $request){
         $post = Post::find($request->id);
         $post->delete();
