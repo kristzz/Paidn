@@ -20,21 +20,25 @@ class RegularUserController extends Controller
             'nationality' => 'required',
             'gender' => 'required'
         ]);
-
-        RegularUser::insert([
-            'user_id' => Auth::user()->id,
-            'name' => $request->name,
-            'secondName' => $request->secondName,
-            'surname' => $request->surname,
-            'age' => $request->age,
-            'nationality' => $request->nationality,
-            'gender'=> $request->gender,
-        ]);
-
-        return response()->json([
-            'status' => true,
-            'message' => 'User data inserted successfully'
-        ]);
+        if (Auth::user()->type === 'regular') {
+            RegularUser::create([
+                'user_id' => Auth::user()->id,
+                'name' => $request->name,
+                'secondName' => $request->secondName,
+                'surname' => $request->surname,
+                'age' => $request->age,
+                'gender'=> $request->gender
+            ]);
+            return response()->json([
+                'status' => true,
+                'message' => 'User data inserted successfully'
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Only regular users can create user profiles'
+            ]);
+        }
     }
 
     public function getUserProfile(){

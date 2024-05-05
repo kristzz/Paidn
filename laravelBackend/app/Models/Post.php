@@ -19,4 +19,9 @@ class Post extends Model
         'salaryRangeLowest',
         'salaryRangeHighest',
     ];
+
+    public function business()
+    {
+        return $this->belongsTo(Business::class, 'user_id', 'user_id');
+    }
 }

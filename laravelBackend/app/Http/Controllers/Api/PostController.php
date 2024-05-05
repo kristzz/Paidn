@@ -23,8 +23,10 @@ class PostController extends Controller
         ]);
 
         if (Auth::user()->type === 'business') {
+            $businessId = Auth::user()->business->id;
             Post::create([
                 'user_id' => Auth::user()->id,
+                'business_id' => $businessId,
                 'title' => $request->title,
                 'jobDesc' => $request->jobDesc,
                 'profession' => $request->profession,
@@ -47,7 +49,7 @@ class PostController extends Controller
     }
 
     public function getPosts(){
-        $posts = Post::all();
+        $posts = Post::with('business')->get();
 
         return response()->json([
             'status' => true,

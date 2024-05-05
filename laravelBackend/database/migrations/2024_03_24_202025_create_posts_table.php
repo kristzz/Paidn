@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('businesses')->onDelete('cascade');
             $table->string('title')->required();
             $table->text('jobDesc')->required();
             $table->string('profession')->required();
