@@ -32,6 +32,7 @@ Route::group([
     Route::get('/deleteUser', [UserController::class, 'deleteUser']);
 
     Route::post('/post', [PostController::class, 'post']);
+    Route::post('/editPost', [PostController::class, 'editPost']);
     Route::get('/getPosts', [PostController::class, 'getPosts']);
     Route::get('/deletePost', [PostController::class, 'deletePost']);
 
@@ -39,10 +40,12 @@ Route::group([
     Route::get('/getUserProfile', [RegularUserController::class, 'getUserProfile']);
 
     Route::post('/addEducation', [EducationController::class, 'addEducation']);
+    Route::post('/editEducationExperience', [EducationController::class, 'editEducationExperience']);
     Route::get('/getEducation', [EducationController::class, 'getEducation']);
     Route::get('/deleteEducation', [EducationController::class, 'deleteEducation']);
 
     Route::post('/addWorkExperience', [WorkController::class, 'addWorkExperience']);
+    Route::post('/editWorkExperience', [WorkController::class, 'editWorkExperience']);
     Route::get('/getWorkExperience', [WorkController::class, 'getWorkExperience']);
     Route::get('/deleteWorkExperience', [WorkController::class, 'deleteWorkExperience']);
 });
