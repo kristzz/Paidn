@@ -16,6 +16,8 @@ class PostController extends Controller
             'title' => 'required',
             'jobDesc' => 'required',
             'profession' => 'required',
+            'country' => 'required',
+            'location' => 'required',
             'salaryRangeLowest' => 'required',
             'salaryRangeHighest' => 'required',
         ]);
@@ -26,6 +28,8 @@ class PostController extends Controller
                 'title' => $request->title,
                 'jobDesc' => $request->jobDesc,
                 'profession' => $request->profession,
+                'country' => $request->country,
+                'location' => $request->location,
                 'salaryRangeLowest' => $request->salaryRangeLowest,
                 'salaryRangeHighest' => $request->salaryRangeHighest,
             ]);

@@ -14,6 +14,8 @@ class Post extends Model
         'title',
         'jobDesc',
         'profession',
+        'country',
+        'location',
         'salaryRangeLowest',
         'salaryRangeHighest',
     ];

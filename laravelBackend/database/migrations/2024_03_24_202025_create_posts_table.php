@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('title')->required();
             $table->text('jobDesc')->required();
             $table->string('profession')->required();
+            $table->string('country')->required();
+            $table->enum('location', ['On-site', 'Hybrid', 'Remote'])->required();
             $table->string('salaryRangeLowest')->required();
             $table->string('salaryRangeHighest')->required();
             $table->timestamps();
