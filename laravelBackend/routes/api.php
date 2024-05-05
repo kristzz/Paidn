@@ -38,6 +38,7 @@ Route::group([
     Route::get('/deletePost', [PostController::class, 'deletePost']);
 
     Route::post('/insertBusiness', [BusinessController::class, 'insertBusiness']);
+    Route::post('/editBusiness', [BusinessController::class, 'editBusiness']);
     Route::get('/getBusinessProfile', [BusinessController::class, 'getBusinessProfile']);
 
     Route::post('/insertUserData', [RegularUserController::class, 'insertUserData']);
