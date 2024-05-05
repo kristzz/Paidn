@@ -46,6 +46,33 @@ class WorkController extends Controller
         ]);
     }
 
+    public function editWorkExperience(Request $request){
+       $work = Work::find($request->id);
+
+       $request->validate([
+           'workPositionName' => 'required',
+           'companyName' => 'required',
+           'fieldOfWork' => 'required',
+           'description' => 'nullable',
+           'startDate' => 'required',
+           'endDate' => 'required',
+       ]);
+       if (Auth::user()->type === 'user') {
+        $work->workPositionName = $request->workPositionName;
+        $work->companyName = $request->companyName;
+        $work->fieldOfWork = $request->fieldOfWork;
+        $work->description = $request->description;
+        $work->startDate = $request->startDate;
+        $work->endDate = $request->endDate;
+        $work->save();
+       }else {
+              return response()->json([
+                'status' => false,
+                'message' => 'Only users can edit work experience'
+              ]);
+       }
+    }
+
     public function deleteWorkExperience(Request $request){
         $work = Work::find($request->id);
         $work->delete();
