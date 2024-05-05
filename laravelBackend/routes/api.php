@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\RegularUserController;
+use App\Http\Controllers\Api\BusinessController;
 use App\Http\Controllers\Api\EducationController;
 use App\Http\Controllers\Api\WorkController;
 
@@ -35,6 +36,9 @@ Route::group([
     Route::post('/editPost', [PostController::class, 'editPost']);
     Route::get('/getPosts', [PostController::class, 'getPosts']);
     Route::get('/deletePost', [PostController::class, 'deletePost']);
+
+    Route::post('/insertBusiness', [BusinessController::class, 'insertBusiness']);
+    Route::get('/getBusinessProfile', [BusinessController::class, 'getBusinessProfile']);
 
     Route::post('/insertUserData', [RegularUserController::class, 'insertUserData']);
     Route::get('/getUserProfile', [RegularUserController::class, 'getUserProfile']);
