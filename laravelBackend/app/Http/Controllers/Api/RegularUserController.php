@@ -17,6 +17,7 @@ class RegularUserController extends Controller
             'secondName' => 'max:50|nullable',
             'surname' => 'max:50|nullable',
             'age' => 'required',
+            'nationality' => 'required',
             'gender' => 'required'
         ]);
 
@@ -26,6 +27,7 @@ class RegularUserController extends Controller
             'secondName' => $request->secondName,
             'surname' => $request->surname,
             'age' => $request->age,
+            'nationality' => $request->nationality,
             'gender'=> $request->gender,
         ]);
 
