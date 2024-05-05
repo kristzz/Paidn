@@ -1,6 +1,6 @@
 <template>
-  <h1>Profile</h1>
     <div v-if="profileData">
+        <h1>Profile</h1>
         <p>Name: {{ profileData.name }}</p>
         <p v-if="profileData.secondName">Second name: {{ profileData.secondName }}</p>
         <p>Surname: {{ profileData.surname }}</p>
