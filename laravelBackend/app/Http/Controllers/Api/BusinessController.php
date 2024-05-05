@@ -37,7 +37,34 @@ class BusinessController extends Controller
                 'message' => 'Only business users can create business profiles'
             ]);
         }
+    }
 
+    public function editBusiness(Request $request){
+        $business = Business::find($request->id);
+
+        $request->validate([
+            'businessName' => 'max:50|required',
+            'businessType' => 'max:50|required',
+            'businessAddress' => 'required',
+            'businessDescription' => 'required',
+        ]);
+        if (Auth::user()->type === 'business') {
+            $business->businessName = $request->businessName;
+            $business->businessType = $request->businessType;
+            $business->businessAddress = $request->businessAddress;
+            $business->businessDescription = $request->businessDescription;
+            $business->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Business data updated successfully'
+            ]);
+        }else{
+            return response()->json([
+                'status' => false,
+                'message' => 'Only business users can update business profiles'
+            ]);
+        }
     }
 
     public function getBusinessProfile(){

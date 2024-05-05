@@ -78,6 +78,11 @@ class PostController extends Controller
             $post->salaryRangeLowest = $request->salaryRangeLowest;
             $post->salaryRangeHighest = $request->salaryRangeHighest;
             $post->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Post updated successfully'
+            ]);
         } else {
             return response()->json([
                 'status' => false,
