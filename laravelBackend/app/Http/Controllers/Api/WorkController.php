@@ -65,6 +65,11 @@ class WorkController extends Controller
         $work->startDate = $request->startDate;
         $work->endDate = $request->endDate;
         $work->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Work experience added successfully'
+        ]);
        }else {
               return response()->json([
                 'status' => false,
