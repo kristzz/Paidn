@@ -11,6 +11,7 @@ class Post extends Model
 
     protected $fillable = [
         'user_id',
+        'business_id',
         'title',
         'jobDesc',
         'profession',

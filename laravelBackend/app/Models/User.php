@@ -55,4 +55,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Work::class);
     }
+
+    public function business()
+    {
+        return $this->hasOne(Business::class);
+    }
 }
