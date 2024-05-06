@@ -44,15 +44,6 @@ cd frontend
 npm i
 ```
 
-### Video call setup
-
-```
-Navigate to the video call directory:
-
-cd videoBackend
-npm i
-```
-
 ## Development
 
 ### Running in parallel
