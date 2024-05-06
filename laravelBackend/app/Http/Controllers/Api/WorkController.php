@@ -68,7 +68,7 @@ class WorkController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'Work experience added successfully'
+            'message' => 'Work experience edited successfully'
         ]);
        }else {
               return response()->json([
