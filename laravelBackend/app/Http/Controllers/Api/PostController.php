@@ -22,10 +22,13 @@ class PostController extends Controller
             'salaryRangeHighest' => 'required',
         ]);
 
-        if (Auth::user()->type === 'business') {
-            $businessId = Auth::user()->business->id;
+        $user = Auth::user();
+
+        if ($user->type === 'business' && $user->business) {
+            $businessId = $user->business->id;
+
             Post::create([
-                'user_id' => Auth::user()->id,
+                'user_id' => $user->id,
                 'business_id' => $businessId,
                 'title' => $request->title,
                 'jobDesc' => $request->jobDesc,
@@ -43,13 +46,22 @@ class PostController extends Controller
         } else {
             return response()->json([
                 'status' => false,
-                'message' => 'Only business users can create posts'
+                'message' => 'Only business users with registered businesses can create posts'
             ]);
         }
     }
 
     public function getPosts(){
         $posts = Post::with('business')->get();
+
+        return response()->json([
+            'status' => true,
+            'posts' => $posts
+        ]);
+    }
+
+    public function getMyPosts(){
+        $posts = Post::where('user_id', Auth::user()->id)->with('business')->get();
 
         return response()->json([
             'status' => true,
