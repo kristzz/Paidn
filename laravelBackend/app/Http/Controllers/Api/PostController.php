@@ -25,11 +25,9 @@ class PostController extends Controller
         $user = Auth::user();
 
         if ($user->type === 'business' && $user->business) {
-            $businessId = $user->business->id;
-
             Post::create([
                 'user_id' => $user->id,
-                'business_id' => $businessId,
+                'business_id' => $user->business->id,
                 'title' => $request->title,
                 'jobDesc' => $request->jobDesc,
                 'profession' => $request->profession,
