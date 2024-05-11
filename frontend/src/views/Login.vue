@@ -15,9 +15,13 @@ export default {
                 email: this.email,
                 password: this.password,
             }).then((response) => {
-                localStorage.setItem('authToken', response.data.token);
-                axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-                this.$router.push('/home');
+                if (response.status === 200) {
+                    localStorage.setItem('authToken', response.data.token);
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+                    this.$router.push('/home');
+                } else {
+                    console.error('Login failed');
+                }
             }).catch((error) => {
                 console.log(error.message);
             });
