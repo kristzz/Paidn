@@ -16,13 +16,13 @@ class UserController extends Controller
         $request->validate([
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
-            'type' => 'required',
+            'type' => 'required|in:user,business',
         ]);
 
         User::create([
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'type' => $request->type
+            'type' => $request->type,
         ]);
 
         return response()->json([
