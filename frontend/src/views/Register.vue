@@ -8,6 +8,7 @@
             <input class="small-input" type="email" placeholder="email@example.com" v-model="email">
             <input class="small-input" type="password" placeholder="password" v-model="password">
             <input class="small-input" type="password" placeholder="confirm password" v-model="password_confirmation">
+            <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p>
             <div class="row">
               <div class="stateButton weight-regular height-text" :class="buttonClass" @click="changeType">{{ buttonText }}</div>
               <button type="button" @click="register" id="authButton" class="authButton weight-regular height-text">Sign Up</button>
@@ -15,11 +16,11 @@
             <div class="left">
               <router-link to="/login" id="left" style="color: inherit;">Login instead</router-link>
             </div>
+            
         </form>
       </div>
     </main>
 </template>
-
 
 <script>
 import axios from 'axios';
@@ -31,6 +32,7 @@ export default {
         password: '',
         password_confirmation: '',
         type: 'unselected', 
+        errorMessage: '',
     };
  },
 
@@ -41,11 +43,14 @@ export default {
       password: this.password,
       password_confirmation: this.password_confirmation,
       type: this.type
-    }).then((response) => {
-      console.log(response.data);
+    }).then(() => {
       this.$router.push('/login');
     }).catch((error) => {
-      console.log(error.message);
+      this.errorMessage = this.$handleError(error);
+
+      if (!this.errorMessage && this.type === 'unselected') {
+        this.errorMessage = 'You must select a user type';
+      }
     });
   },
   changeType() { 
