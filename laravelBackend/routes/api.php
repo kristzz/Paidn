@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\RegularUserController;
 use App\Http\Controllers\Api\BusinessController;
 use App\Http\Controllers\Api\EducationController;
 use App\Http\Controllers\Api\WorkController;
+use App\Http\Controllers\Api\ApplyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,4 +55,6 @@ Route::group([
     Route::post('/editWork', [WorkController::class, 'editWorkExperience']);
     Route::get('/getWork', [WorkController::class, 'getWorkExperience']);
     Route::get('/deleteWork', [WorkController::class, 'deleteWorkExperience']);
+
+    Route::post('/applyForJob', [ApplyController::class, 'applyForJob']);
 });
