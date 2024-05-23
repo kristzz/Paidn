@@ -49,21 +49,48 @@ class PostController extends Controller
         }
     }
 
-    public function getPosts(){
-        $posts = Post::with('business')->get();
+    public function getPosts(Request $request)
+    {
+        $search = $request->query('search');
+        $sortKey = $request->query('sortKey', 'title');
+        $sortOrder = $request->query('sortOrder', 'asc');
+        $minSalary = $request->query('minSalary', 0);
+        $maxSalary = $request->query('maxSalary', 100000000);
+
+        $userType = Auth::user()->type;
+
+        $query = Post::with('business');
+
+        if ($search) {
+            $query->where('title', 'like', '%' . $search . '%')
+                  ->orWhere('jobDesc', 'like', '%' . $search . '%')
+                  ->orWhere('profession', 'like', '%' . $search . '%')
+                  ->orWhere('country', 'like', '%' . $search . '%')
+                  ->orWhere('location', 'like', '%' . $search . '%');
+        }
+
+        $query->whereBetween('salaryRangeLowest', [$minSalary, $maxSalary]);
+
+        $query->orderBy($sortKey, $sortOrder);
+
+        $posts = $query->get();
 
         return response()->json([
             'status' => true,
-            'posts' => $posts
+            'posts' => $posts,
+            'userType' => $userType
         ]);
     }
 
     public function getMyPosts(){
         $posts = Post::where('user_id', Auth::user()->id)->with('business')->get();
 
+        $userType = Auth::user()->type;
+
         return response()->json([
             'status' => true,
-            'posts' => $posts
+            'posts' => $posts,
+            'userType' => $userType
         ]);
     }
 
@@ -101,13 +128,22 @@ class PostController extends Controller
         }
     }
 
-    public function deletePost(Request $request){
+    public function deletePost(Request $request)
+    {
         $post = Post::find($request->id);
-        $post->delete();
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Post deleted successfully'
-        ]);
+        if (Auth::user()->type === 'business' && Auth::user()->id === $post->user_id) {
+            $post->delete();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Post deleted successfully'
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Only business users can delete posts'
+            ]);
+        }
     }
 }
