@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\BusinessController;
 use App\Http\Controllers\Api\EducationController;
 use App\Http\Controllers\Api\WorkController;
 use App\Http\Controllers\Api\ApplyController;
+use App\Http\Controllers\Api\PhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,4 +58,8 @@ Route::group([
     Route::get('/deleteWork', [WorkController::class, 'deleteWorkExperience']);
 
     Route::post('/applyForJob', [ApplyController::class, 'applyForJob']);
+    Route::get('/getApplications', [ApplyController::class, 'getApplications']);
+
+    Route::post('/upload', [PhotoController::class, 'upload']);
+    Route::post('/remove', [PhotoController::class, 'remove']);
 });
