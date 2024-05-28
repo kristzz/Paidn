@@ -60,6 +60,8 @@ Route::group([
     Route::post('/applyForJob', [ApplyController::class, 'applyForJob']);
     Route::get('/getApplications', [ApplyController::class, 'getApplications']);
 
-    Route::post('/upload', [PhotoController::class, 'upload']);
-    Route::post('/remove', [PhotoController::class, 'remove']);
+    Route::post('/uploadPhoto', [PhotoController::class, 'uploadPhoto']);
+    Route::post('/removePhoto', [PhotoController::class, 'removePhoto']);
+    Route::post('/editPhoto/{id}', [PhotoController::class, 'editPhoto']);
+    Route::get('/photo/{id}', [PhotoController::class,'/getPhoto']);
 });
