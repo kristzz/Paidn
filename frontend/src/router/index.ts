@@ -32,11 +32,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (localStorage.getItem('authToken') && to.path === '/login' || to.path === '/register') {
-    next({ path: '/home' })
+  const isAuthenticated = !!localStorage.getItem('authToken');
+  
+  if (isAuthenticated && (to.path === '/login' || to.path === '/register')) {
+    next({ path: '/home' });
   } else {
-    next()
+    next();
   }
- })
+});
 
 export default router

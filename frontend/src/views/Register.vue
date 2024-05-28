@@ -3,7 +3,6 @@
 
 <template>
     <main>
-      <div>
         <form class="input-container">
             <input class="small-input" type="email" placeholder="email@example.com" v-model="email">
             <input class="small-input" type="password" placeholder="password" v-model="password">
@@ -15,10 +14,8 @@
             </div>
             <div class="left">
               <router-link to="/login" id="left" style="color: inherit;">Login instead</router-link>
-            </div>
-            
+            </div> 
         </form>
-      </div>
     </main>
 </template>
 
