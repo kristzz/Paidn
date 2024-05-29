@@ -40,11 +40,9 @@ Route::group([
     Route::get('/getMyPosts', [PostController::class, 'getMyPosts']);
     Route::get('/deletePost', [PostController::class, 'deletePost']);
 
-    Route::post('/insertBusiness', [BusinessController::class, 'insertBusiness']);
-    Route::post('/editBusiness', [BusinessController::class, 'editBusiness']);
+    Route::post('/saveBusiness', [BusinessController::class, 'saveBusinessProfile']);
     Route::get('/getBusinessProfile', [BusinessController::class, 'getBusinessProfile']);
 
-    Route::post('/insertUserData', [RegularUserController::class, 'insertUserData']);
     Route::post('/editRegularUser', [RegularUserController::class, 'editRegularUser']);
     Route::get('/getUserProfile', [RegularUserController::class, 'getUserProfile']);
 
