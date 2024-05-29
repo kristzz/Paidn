@@ -47,7 +47,8 @@ class UserController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Login successful',
-                'token' => $token
+                'token' => $token,
+                'type' => $user->type,
             ]);
         }else{
             return response()->json([
@@ -63,7 +64,8 @@ class UserController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'User profile',
-            'data' => $user
+            'data' => $user,
+
         ]);
     }
 
