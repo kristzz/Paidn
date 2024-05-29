@@ -37,6 +37,7 @@
         }).then((response) => {
           if (response.status === 200) {
             localStorage.setItem('authToken', response.data.token);
+            localStorage.setItem('userType', response.data.type);
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
             this.$router.push('/home');
           } else {
