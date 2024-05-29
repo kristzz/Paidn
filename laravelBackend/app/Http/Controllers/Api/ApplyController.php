@@ -14,7 +14,7 @@ class ApplyController extends Controller
     public function applyForJob(Request $request)
     {
         $user = Auth::user();
-        $post = Post::findOrFail($request->post_id); // Ensure post exists
+        $post = Post::findOrFail($request->post_id);
 
         if ($user->type === 'user') {
             $appliedJob = new Apply();
@@ -32,5 +32,26 @@ class ApplyController extends Controller
                 'message' => 'Only users can apply for jobs'
             ]);
         }
+    }
+
+    public function getApplications(Request $request)
+    {
+        $user = Auth::user();
+        $post = Post::findOrFail($request->post_id);
+
+        if ($user->type === 'business') {
+            $applications = Apply::where('post_id', $post->id)->with('user')->get();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Applications retrieved successfully',
+                'applications' => $applications
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Only businesses can view applications'
+        ]);
     }
 }
