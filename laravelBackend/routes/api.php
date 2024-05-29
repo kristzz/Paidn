@@ -45,6 +45,7 @@ Route::group([
     Route::get('/getBusinessProfile', [BusinessController::class, 'getBusinessProfile']);
 
     Route::post('/insertUserData', [RegularUserController::class, 'insertUserData']);
+    Route::post('/editRegularUser', [RegularUserController::class, 'editRegularUser']);
     Route::get('/getUserProfile', [RegularUserController::class, 'getUserProfile']);
 
     Route::post('/addEducation', [EducationController::class, 'addEducation']);
