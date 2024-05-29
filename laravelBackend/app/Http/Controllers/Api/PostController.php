@@ -106,7 +106,8 @@ class PostController extends Controller
             'salaryRangeLowest' => 'required',
             'salaryRangeHighest' => 'required',
         ]);
-        if (Auth::user()->type === 'business') {
+
+        if (Auth::user()->type === 'business' && $post && $post->user_id === Auth::user()->id) {
             $post->title = $request->title;
             $post->jobDesc = $request->jobDesc;
             $post->profession = $request->profession;
