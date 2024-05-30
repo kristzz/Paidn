@@ -1,5 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,11 +28,11 @@ const router = createRouter({
       component: () => import('../views/Profile.vue')
     }
   ]
-})
+});
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = !!localStorage.getItem('authToken');
-  
+
   if (isAuthenticated && (to.path === '/login' || to.path === '/register')) {
     next({ path: '/home' });
   } else {
@@ -41,4 +40,4 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-export default router
+export default router;
