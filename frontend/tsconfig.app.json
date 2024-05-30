@@ -5,10 +5,16 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "module": "esnext",
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
+    "jsx": "preserve",
+    "strict": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true
   }
 }
