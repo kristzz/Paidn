@@ -146,29 +146,29 @@
   
       <div v-if="userType === 'business'">
       <div class="fetchFields">
-        <div v-if="businessProfileData">
+        <div v-if="businessData">
           <h1>Business Profile</h1>
-          <p>Business Name: {{ businessProfileData.businessName }}</p>
-          <p>Business Type: {{ businessProfileData.businessType }}</p>
-          <p>Description: {{ businessProfileData.businessDescription }}</p>
-          <p>Address: {{ businessProfileData.businessAddress }}</p>
+          <p>Business Name: {{ businessData.businessName }}</p>
+          <p>Business Type: {{ businessData.businessType }}</p>
+          <p>Business Description: {{ businessData.businessDescription }}</p>
+          <p>Business Address: {{ businessData.businessAddress }}</p>
           <button @click="editBusinessProfile = true">Edit Business Profile</button>
         </div>
         <div v-else>
           <p>Loading...</p>
         </div>
-      </div>
 
-      <div v-if="editBusinessProfile">
-        <h2>Edit Business Profile</h2>
-        <form @submit.prevent="saveBusinessProfile">
-          <input type="text" v-model="businessProfileForm.businessName" placeholder="Business Name" required />
-          <input type="text" v-model="businessProfileForm.businessType" placeholder="Business Type" required />
-          <input type="text" v-model="businessProfileForm.businessDescription" placeholder="Business Description" />
-          <input type="text" v-model="businessProfileForm.businessAddress" placeholder="Business Address" required />
-          <button type="submit">Save</button>
-          <button @click="editBusinessProfile = false">Cancel</button>
-        </form>
+        <div v-if="editBusinessProfile">
+          <h2>Edit Business Profile</h2>
+          <form @submit.prevent="saveBusinessProfile">
+            <input type="text" v-model="businessProfileForm.businessName" placeholder="Business Name" required />
+            <input type="text" v-model="businessProfileForm.businessType" placeholder="Business Type" required />
+            <input type="text" v-model="businessProfileForm.businessDescription" placeholder="Business Description" required />
+            <input type="text" v-model="businessProfileForm.businessAddress" placeholder="Business Address" required />
+            <button type="submit">Save</button>
+            <button @click="editBusinessProfile = false">Cancel</button>
+          </form>
+        </div>
       </div>
     </div>
   </main>
@@ -184,12 +184,12 @@ export default {
       profileData: null,
       educationData: null,
       workData: null,
+      businessData: null,
       editProfile: false,
       editEducation: false,
       editWork: false,
       addEducation: false,
       addWork: false,
-      businessProfileData: null,
       editBusinessProfile: false,
       profileForm: {
         name: '',
@@ -245,7 +245,7 @@ export default {
       this.fetchProfile(authToken);
       this.fetchEducation(authToken);
       this.fetchWork(authToken);
-      this.fetchBusinessProfileData(authToken);
+      this.fetchBusinessProfile(authToken);
     } else {
       alert('You are not logged in');
       this.$router.push('/login');
@@ -379,28 +379,22 @@ export default {
         console.log(error.message);
       });
     },
-    async fetchBusinessProfileData() {
-        const authToken = localStorage.getItem('authToken');
-        try {
-            const response = await axios.get('/getBusinessProfile', {
-                headers: {
-                    'Authorization': `Bearer ${authToken}`,
-                    'Content-Type': 'application/json'
-                }
-            });
-            const contentType = response.headers.get("content-type");
-
-            if (contentType && contentType.includes("application/json")) {
-                const data = response.data;
-                console.log('Fetched business profile data:', data);
-                this.businessProfileData = data;
-            } else {
-                const textResponse = await response.text();
-                console.error('Expected JSON response but received:', textResponse);
-            }
-        } catch (error) {
-            console.error('Error fetching business profile data:', error);
+    fetchBusinessProfile(authToken) {
+      axios.get('/getBusinessProfile', {
+        headers: {
+          Authorization: `Bearer ${authToken}`
         }
+      })
+      .then(response => {
+        if (response.data.status) {
+          this.businessData = response.data.businessData;
+        } else {
+          this.error = 'Failed to load business profile';
+        }
+      })
+      .catch(error => {
+        this.error = 'An error occurred: ' + error.message;
+      });
     },
     saveBusinessProfile() {
       const authToken = localStorage.getItem('authToken');
@@ -408,15 +402,17 @@ export default {
         headers: {
           Authorization: `Bearer ${authToken}`
         }
-      }).then(response => {
+      })
+      .then(response => {
         if (response.data.status) {
-          this.businessProfileData = { ...this.businessProfileForm };
           this.editBusinessProfile = false;
+          this.fetchBusinessProfile(authToken);
         } else {
-          alert(response.data.message);
+          this.error = 'Failed to update business profile';
         }
-      }).catch(error => {
-        console.log(error.message);
+      })
+      .catch(error => {
+        this.error = 'An error occurred: ' + error.message;
       });
     }
   }

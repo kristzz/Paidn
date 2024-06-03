@@ -37,7 +37,7 @@ class ApplyController extends Controller
     public function getApplications(Request $request)
     {
         $user = Auth::user();
-        $post = Post::findOrFail($request->post_id);
+        $post = Post::findOrFail($request->query('post_id'));
 
         if ($user->type === 'business') {
             $applications = Apply::where('post_id', $post->id)->with('user')->get();

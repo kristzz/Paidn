@@ -9,7 +9,7 @@
         <p>Location: {{ post.location }}</p>
         <p>Description: {{ post.jobDesc }}</p>
         <p>Salary range: {{ post.salaryRangeLowest }}$ - {{ post.salaryRangeHighest }}$</p>
-        <br>
+        <button @click="applyForJob(post.id)">Apply for this job</button>
       </div>
     </div>
     <div v-if="userType === 'business'">
@@ -24,7 +24,7 @@
         <p>Salary range: {{ post.salaryRangeLowest }}$ - {{ post.salaryRangeHighest }}$</p>
         <button @click="openPostForm(post)">Edit</button>
         <button @click="deletePost(post.id)">Delete</button>
-        <br>
+        <button @click="showApplications(post.id)">Show Applications</button>
       </div>
       <div v-if="showPostForm">
         <h2>{{ editingPost ? 'Edit Post' : 'Add Post' }}</h2>
@@ -44,6 +44,17 @@
           <button type="submit">{{ editingPost ? 'Save' : 'Add' }}</button>
           <button @click="cancelEdit">Cancel</button>
         </form>
+      </div>
+
+      <div v-if="showApplicationsModal" class="modal">
+        <div class="modal-content">
+          <span class="close" @click="closeApplicationsModal">&times;</span>
+          <h2>Applications for Post: {{ currentPostId }}</h2>
+          <div v-for="application in applications" :key="application.id">
+            <p>Email: {{ application.user.email }}</p>
+            <p>Resume: <a :href="application.resumeLink" target="_blank">View Resume</a></p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -69,7 +80,10 @@ export default {
         salaryRangeLowest: '',
         salaryRangeHighest: ''
       },
-      editingPost: null
+      editingPost: null,
+      applications: [],
+      showApplicationsModal: false,
+      currentPostId: null
     };
   },
   methods: {
@@ -115,6 +129,7 @@ export default {
         if (response.data.status) {
           this.fetchPosts();
           this.resetPostForm();
+          location.reload();
         } else {
           alert(response.data.message);
         }
@@ -146,6 +161,7 @@ export default {
         if (response.data.status) {
           this.fetchPosts();
           this.resetPostForm();
+          location.reload();
         } else {
           alert(response.data.message);
         }
@@ -160,10 +176,36 @@ export default {
       }).then(response => {
         if (response.data.status) {
           this.fetchPosts();
+          location.reload();
         } else {
           alert(response.data.message);
         }
       });
+    },
+    showApplications(postId) {
+      const authToken = localStorage.getItem('authToken');
+      axios.get('/getApplications', {
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        },
+        params: {
+          post_id: postId
+        }
+      }).then(response => {
+        if (response.data.status) {
+          this.applications = response.data.applications;
+          this.currentPostId = postId;
+          this.showApplicationsModal = true;
+        } else {
+          alert(response.data.message);
+        }
+      }).catch(error => {
+        console.error('Error fetching applications:', error);
+      });
+    },
+    closeApplicationsModal() {
+      this.showApplicationsModal = false;
+      this.applications = [];
     },
     cancelEdit() {
       this.resetPostForm();
@@ -181,6 +223,23 @@ export default {
         salaryRangeLowest: '',
         salaryRangeHighest: ''
       };
+    },
+    applyForJob(postId) {
+      const authToken = localStorage.getItem('authToken');
+      axios.post('/applyForJob', { post_id: postId }, {
+        headers: {
+          Authorization: `Bearer ${authToken}`
+        }
+      }).then(response => {
+        if (response.data.status) {
+          alert('Applied successfully');
+        } else {
+          alert('Failed to apply: ' + response.data.message);
+        }
+      }).catch(error => {
+        console.error('Error applying for job:', error);
+        alert('An error occurred: ' + error.message);
+      });
     }
   },
   mounted() {
@@ -189,3 +248,42 @@ export default {
   }
 };
 </script>
+
+<style>
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+</style>

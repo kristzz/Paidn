@@ -4,7 +4,6 @@
         <li><router-link to="/home">Home</router-link></li>
         <li><router-link to="/profile">Profile</router-link></li>
         <li><router-link to="/settings">Settings</router-link></li>
-        <li v-if="userType !== 'user'"><router-link to="/applicants">Applicants</router-link></li>
       </ul>
     </nav>
   </template>
