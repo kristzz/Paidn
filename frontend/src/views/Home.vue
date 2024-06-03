@@ -45,7 +45,6 @@
           <button @click="cancelEdit">Cancel</button>
         </form>
       </div>
-
       <div v-if="showApplicationsModal" class="modal">
         <div class="modal-content">
           <span class="close" @click="closeApplicationsModal">&times;</span>

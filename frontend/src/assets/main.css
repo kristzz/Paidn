@@ -4,7 +4,11 @@
   /* Colors for everything */
   --color-black:  #121212;
   --color-white: #F2F2F2;
-  --color-gray: #BDBDBD;
+
+  --color-white-cream: #f5f3e7;
+  --color-gray-dark: #3d444c;
+  --color-blue-seattle: #2e50a2;
+  --color-blue-azure: #007fff;
 
   /* Font, font weights and font sizes */
   --font: 'Inter';
