@@ -10,6 +10,12 @@
   --color-blue-seattle: #2e50a2;
   --color-blue-azure: #007fff;
 
+  --background-color: #f5f3e7;
+  --box-color: #F2F2F2;
+  --text-color: #121212;
+  --accent-color: #007fff;
+
+
   /* Font, font weights and font sizes */
   --font: 'Inter';
 
@@ -23,6 +29,13 @@
 }
 /* default classes */
 
+.dark-mode {
+  --background-color: #121212;
+  --box-color: #3d444c;
+  --text-color: #F2F2F2;
+  --accent-color: #007fff;
+}
+
 *,
 *::before,
 *::after {
@@ -31,7 +44,7 @@
   box-sizing: border-box;
 }
 
-html {
+body {
   font-family: var(--font);
   margin: 0;
   padding: 0;
