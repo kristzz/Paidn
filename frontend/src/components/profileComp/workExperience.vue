@@ -1,15 +1,24 @@
-<template>
-  <div v-if="userType === 'user'">
+<template >
+  <div v-if="userType === 'user'" class="paper">
     <div v-if="workData && workData.length > 0">
-      <h1>Work Experience</h1>
-      <button @click="openAddWork()">Add Work Experience Information</button>
-      <div v-for="workEntry in workData" :key="workEntry.id">
-        <p>Company: {{ workEntry.companyName }}</p>
-        <p>Position: {{ workEntry.workPositionName }}</p>
-        <p v-if="workEntry.description">Description: {{ workEntry.description }}</p>
-        <p>From: {{ workEntry.startDate }}</p>
-        <p v-if="workEntry.endDate">To: {{ workEntry.endDate }}</p>
-        <button @click="openEditWork(workEntry)">Edit</button>
+      <div>
+        <div class="row heading">
+          <h1>Work Experience</h1>
+          <button @click="openAddWork()" class="addButton">+</button>
+        </div>
+        <div class="wrapper">  
+          <div v-for="workEntry in workData" :key="workEntry.id" class="container">
+            <p><div class="weight-light">Company:</div> {{ workEntry.companyName }}</p>
+            <p><div class="weight-light">Position:</div> {{ workEntry.workPositionName }}</p>
+            <p v-if="workEntry.description"><div class="weight-light">Description:</div> {{ workEntry.description }}</p>
+            <p><div class="weight-light">From: </div>{{ workEntry.startDate }}</p>
+            <p v-if="workEntry.endDate"><div class="weight-light">To:</div> {{ workEntry.endDate }}</p>
+            <div class="row edButtons">
+              <button class="textButton editButton height-text" @click="openEditWork(workEntry)">Edit</button>
+              <button class="textButton deleteButton height-text" @click="deleteWorkExperience(workEntry)">Delete</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div v-else-if="workData && workData.length === 0">
@@ -28,6 +37,7 @@
         <form @submit.prevent="addWorkEntry">
           <input type="text" v-model="newWork.companyName" placeholder="Company" required />
           <input type="text" v-model="newWork.workPositionName" placeholder="Position" required />
+          <input type="text" v-model="newWork.fieldOfWork" placeholder="Field" required />
           <input type="text" v-model="newWork.description" placeholder="Description" />
           <input type="date" v-model="newWork.startDate" placeholder="Start Date" required />
           <input type="date" v-model="newWork.endDate" placeholder="End Date" />
@@ -43,13 +53,14 @@
         <span class="close" @click="closeEditWorkModal">&times;</span>
         <h2>Edit Work Experience</h2>
         <form @submit.prevent="updateWork">
-          <input type="text" v-model="workForm.companyName" placeholder="Company" required />
-          <input type="text" v-model="workForm.workPositionName" placeholder="Position" required />
-          <input type="text" v-model="workForm.description" placeholder="Description" />
-          <input type="date" v-model="workForm.startDate" placeholder="Start Date" required />
-          <input type="date" v-model="workForm.endDate" placeholder="End Date" />
-          <button type="submit">Save</button>
-          <button @click="closeEditWorkModal">Cancel</button>
+          <input class="editInput" type="text" v-model="workForm.companyName" placeholder="Company" required />
+          <input class="editInput" type="text" v-model="workForm.workPositionName" placeholder="Position" required />
+          <input class="editInput" type="text" v-model="workForm.fieldOfWork" placeholder="Field" required />
+          <input class="editInput" type="text" v-model="workForm.description" placeholder="Description" />
+          <input class="editInput" type="date" v-model="workForm.startDate" placeholder="Start Date" required />
+          <input class="editInput" type="date" v-model="workForm.endDate" placeholder="End Date" />
+          <button class="editButton" type="submit">Save</button>
+          <button class="deleteButton" @click="closeEditWorkModal">Cancel</button>
         </form>
       </div>
     </div>
@@ -70,6 +81,7 @@ export default {
       newWork: {
         companyName: '',
         workPositionName: '',
+        fieldOfWork: '',
         description: '',
         startDate: '',
         endDate: ''
@@ -134,6 +146,29 @@ export default {
         console.log(error.message);
       });
     },
+    deleteWorkExperience(workEntry) {
+      axios.get('/deleteWork', {
+        params: {
+          id: workEntry.id
+        },
+        headers: {
+          Authorization: `Bearer ${this.authToken}`
+        }
+       })
+        .then(response => {
+          if (response.data.status) {
+            const index = this.workData.findIndex(entry => entry.id === workEntry.id);
+            if (index !== -1) {
+              this.workData.splice(index, 1);
+            }
+          } else {
+            alert(response.data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error deleting work entry:', error);
+        });
+    },
     openAddWork() {
       this.showAddWorkModal = true;
     },
@@ -151,7 +186,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+button{
+  text-align: center;
+}
+
+.paper{
+  width: 80%;
+  left: 10%;
+  position: relative;
+}
+
 .modal {
   display: flex;
   justify-content: center;
@@ -167,9 +212,8 @@ export default {
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: var(--box-color);
   padding: 20px;
-  border: 1px solid #888;
   width: 80%;
   max-width: 600px;
   margin: auto;
@@ -187,5 +231,106 @@ export default {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.row{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.editInput{
+    background: var(--color-white);
+}
+
+.edButtons{
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: space-between; 
+}
+
+.container {
+  background: var(--box-color);
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 127, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.addButton{
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  background: var(--accent-color);
+  color: var(--color-white);
+  cursor: pointer;
+  position: relative;
+}
+
+.textButton{
+  color: var(--text-color);
+  cursor: pointer; 
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+}
+
+.editButton{
+  width: 5rem;
+  background: var(--accent-color);
+}
+
+.deleteButton{
+  width: 5rem;
+  background: var(--color-red)
+}
+
+.container p {
+  margin: 0.5rem 0;
+  display: flex;
+  gap: 0.35rem;
+}
+
+.container button {
+  display: block;
+  margin-top: 10px;
+}
+
+.container p{
+  text-align: left;
+}
+
+.wrapper{
+  display: flex;
+  align-items: start;
+  justify-content: start; 
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .addButton{
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.325rem;
+  }
+
+  .wrapper{
+    display: flex;
+    align-items: start;
+    justify-content: start; 
+    flex-direction: row;
+    gap: 5%;
+  }
+
+  .container{
+    min-width: 50%;
+  }
+
+  .heading{
+    gap: 1rem;
+  }
+
 }
 </style>

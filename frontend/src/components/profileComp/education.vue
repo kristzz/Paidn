@@ -27,9 +27,9 @@
         <span class="close" @click="closeAddEducationModal">&times;</span>
         <h2>Add Education Experience</h2>
         <form @submit.prevent="addEducationEntry">
-          <input type="text" v-model="educationForm.educationProvider" placeholder="School" required />
-          <input type="text" v-model="educationForm.levelOfEducation" placeholder="Education level" required />
-          <input type="text" v-model="educationForm.fieldOfStudy" placeholder="Field" required />
+          <input type="text" v-model="newEducation.educationProvider" placeholder="School" required />
+          <input type="text" v-model="newEducation.levelOfEducation" placeholder="Education level" required />
+          <input type="text" v-model="newEducation.fieldOfStudy" placeholder="Field" required />
           <input type="text" v-model="newEducation.description" placeholder="Description" />
           <input type="date" v-model="newEducation.startDate" placeholder="Start Date" required />
           <input type="date" v-model="newEducation.endDate" placeholder="End Date" />
@@ -79,8 +79,9 @@ export default {
         endDate: ''
       },
       educationForm: {
-        schoolName: '',
-        degree: '',
+        educationProvider: '',
+        levelOfEducation: '',
+        fieldOfStudy: '',
         description: '',
         startDate: '',
         endDate: ''

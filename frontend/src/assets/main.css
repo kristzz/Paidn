@@ -4,17 +4,21 @@
   /* Colors for everything */
   --color-black:  #121212;
   --color-white: #F2F2F2;
+  --color-red: #881717;
 
   --color-white-cream: #f5f3e7;
   --color-gray-dark: #3d444c;
   --color-blue-seattle: #2e50a2;
-  --color-blue-azure: #007fff;
 
-  --background-color: #f5f3e7;
-  --box-color: #F2F2F2;
-  --text-color: #121212;
+  --background-color: #121212;
+  --box-color: #212325;
+  --text-color: #F2F2F2;
   --accent-color: #007fff;
 
+  --background-color-rgba: rgba(245, 243, 231, 0.7);
+  --box-color-rgba: rgba(242, 242, 242, 0.7);
+  --text-color-rgba: rgba(18, 18, 18, 0.7);
+  --accent-color-rgba: rgba(0, 127, 255, 0.7);
 
   /* Font, font weights and font sizes */
   --font: 'Inter';
@@ -30,10 +34,11 @@
 /* default classes */
 
 .dark-mode {
-  --background-color: #121212;
-  --box-color: #3d444c;
-  --text-color: #F2F2F2;
-  --accent-color: #007fff;
+
+  --background-color: #f5f3e7;
+  --box-color: #F2F2F2;
+  --text-color: #121212;
+  --accent-color: #2e50a2;
 }
 
 *,
@@ -49,6 +54,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 button {

@@ -1,8 +1,8 @@
 <template>
   <div>
     <Profile :authToken="authToken" />
-    <Education :authToken="authToken" />
     <WorkExperience :authToken="authToken" />
+    <Education :authToken="authToken" />
     <BusinessProfile :authToken="authToken" />
   </div>
 </template>

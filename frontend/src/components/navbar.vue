@@ -27,7 +27,7 @@
 
 <style scoped>
 nav {
-  background-color: #333;
+  background-color: var(--accent-color);
   padding: 10px 0;
   display: flex;
   justify-content: end;

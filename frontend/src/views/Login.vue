@@ -36,10 +36,10 @@
           password: this.password,
         }).then((response) => {
           if (response.status === 200) {
+            location.reload();
             localStorage.setItem('authToken', response.data.token);
             localStorage.setItem('userType', response.data.type);
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
-            this.$router.push('/home');
           } else {
             this.errorMessage = 'Login failed';
           }
