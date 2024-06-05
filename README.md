@@ -19,6 +19,7 @@ composer install
 php artisan key:generate   
 php artisan passport:keys    
 php artisan migrate     
+php artisan db:seed      
 php artisan passport:client --personal    
 php artisan storage:link              
 composer require laravel/telescope --dev     
