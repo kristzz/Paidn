@@ -20,12 +20,9 @@
         </div>
       </div>
     </div>
-    <div v-else-if="profileData === null">
+    <div v-else>
       <p>No education experience data found. Please add your education experience information.</p>
       <button @click="openAddEducation()">Add Education Experience Information</button>
-    </div>
-    <div v-else>
-      <p>Loading...</p>
     </div>
 
     <!-- Add Education Experience Modal -->

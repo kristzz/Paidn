@@ -32,18 +32,18 @@
           this.errorMessage = 'Email and password are required';
           return;
         }
-  
+
         axios.post('/login', {
           email: this.email,
           password: this.password,
         }).then((response) => {
-          if (response.status === 200) {
-            location.reload();
+          if (response.data.status) {
             localStorage.setItem('authToken', response.data.token);
             localStorage.setItem('userType', response.data.type);
             axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+            location.reload();
           } else {
-            this.errorMessage = 'Login failed';
+            this.errorMessage = response.data.message || 'Login failed';
           }
         }).catch((error) => {
           if (error.response && error.response.data && error.response.data.message) {

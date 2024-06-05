@@ -23,6 +23,7 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'type' => $request->type,
+            'status' => 'active',
         ]);
 
         return response()->json([
@@ -37,26 +38,43 @@ class UserController extends Controller
             'password' => 'required'
         ]);
 
-        if(Auth::attempt([
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User not found'
+            ]);
+        }
+
+        $validTypes = ['admin', 'user', 'business'];
+        if (!in_array($user->type, $validTypes)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid user type'
+            ]);
+        }
+
+        if (!Auth::attempt([
             'email' => $request->email,
             'password' => $request->password
-        ])){
-            $user = Auth::user();
-            $token = $user->createToken('authToken')->accessToken;
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Login successful',
-                'token' => $token,
-                'type' => $user->type,
-            ]);
-        }else{
+        ])) {
             return response()->json([
                 'status' => false,
                 'message' => 'Invalid credentials'
             ]);
         }
+
+        $token = $user->createToken('authToken')->accessToken;
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Login successful',
+            'token' => $token,
+            'type' => $user->type,
+        ]);
     }
+
     //Get
     public function profile(){
         $user = Auth::user();
@@ -82,6 +100,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         try {
+            $user->status = 'inactive';
             $user->delete();
             auth()->user()->token()->revoke();
 

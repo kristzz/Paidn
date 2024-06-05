@@ -226,7 +226,7 @@ export default {
     },
     updatePost() {
       const authToken = localStorage.getItem('authToken');
-      axios.put(`/updatePost?id=${this.newPost.id}`, this.newPost, {
+      axios.post('/editPosts', this.newPost, {
         headers: {
           Authorization: `Bearer ${authToken}`
         }
@@ -234,6 +234,7 @@ export default {
         if (response.data.status) {
           this.fetchPosts();
           this.resetPostForm();
+          location.reload();
         } else {
           alert(response.data.message);
         }

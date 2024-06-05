@@ -45,7 +45,10 @@ router.beforeEach((to, from, next) => {
 
   if (isAuthenticated && (to.path === '/login' || to.path === '/register')) {
     next({ path: '/home' });
-  } else {
+  }
+  else if(!isAuthenticated && (to.path === '/home' || to.path === '/profile' || to.path === '/settings' || to.path === '/admin')) {
+    next({ path: '/login' });
+  }else {
     next();
   }
 });
