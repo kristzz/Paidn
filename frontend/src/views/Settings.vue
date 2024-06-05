@@ -1,8 +1,8 @@
 <template>
-    <div>
-      <button @click="logout">Logout</button>
+    <div class="container">
+      <button class="logoutButton button height-regular" @click="logout">Logout</button>
   
-      <button @click="deleteAccount">Delete Account</button>
+      <button class="deleteButton button height-regular" @click="deleteAccount">Delete Account</button>
     </div>
   </template>
   
@@ -57,8 +57,31 @@
   };
   </script>
   
-  <!-- Styles if needed -->
-  <style>
-  /* Add your styles here */
+  <style scoped>
+    .container{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 95vh;
+      flex-direction: column;
+      gap: 5%;
+    }
+
+    .button{
+      border-radius: 2rem;
+      width: 20rem;
+      height: 4rem;
+      padding: 0.5rem;
+      color: var(--text-color);
+      cursor: pointer;
+    }
+
+    .logoutButton{
+      background: var(--accent-color);
+    }
+
+    .deleteButton{
+      background: var(--color-red)
+    }
   </style>
   

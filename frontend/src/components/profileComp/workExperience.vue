@@ -2,7 +2,7 @@
   <div v-if="userType === 'user'" class="paper">
     <div v-if="workData && workData.length > 0">
       <div>
-        <div class="row heading">
+        <div class="row heading marginTop">
           <h1>Work Experience</h1>
           <button @click="openAddWork()" class="addButton">+</button>
         </div>
@@ -34,15 +34,17 @@
       <div class="modal-content">
         <span class="close" @click="closeAddWorkModal">&times;</span>
         <h2>Add Work Experience</h2>
-        <form @submit.prevent="addWorkEntry">
-          <input type="text" v-model="newWork.companyName" placeholder="Company" required />
-          <input type="text" v-model="newWork.workPositionName" placeholder="Position" required />
-          <input type="text" v-model="newWork.fieldOfWork" placeholder="Field" required />
-          <input type="text" v-model="newWork.description" placeholder="Description" />
-          <input type="date" v-model="newWork.startDate" placeholder="Start Date" required />
-          <input type="date" v-model="newWork.endDate" placeholder="End Date" />
-          <button type="submit">Save</button>
-          <button @click="closeAddWorkModal">Cancel</button>
+        <form class="editForm" @submit.prevent="addWorkEntry">
+          <input class="editInput height-text" type="text" v-model="newWork.companyName" placeholder="Company" required />
+          <input class="editInput height-text" type="text" v-model="newWork.workPositionName" placeholder="Position" required />
+          <input class="editInput height-text" type="text" v-model="newWork.fieldOfWork" placeholder="Field" required />
+          <input class="editInput height-text" type="text" v-model="newWork.description" placeholder="Description" />
+          <input class="editInput height-text" type="date" v-model="newWork.startDate" placeholder="Start Date" required />
+          <input class="editInput height-text" type="date" v-model="newWork.endDate" placeholder="End Date" />
+          <div class="row editButtons edButtons">
+            <button class="textButton editButton height-text" type="submit">Save</button>
+            <button class="textButton deleteButton height-text" @click="closeAddWorkModal">Cancel</button>
+          </div>
         </form>
       </div>
     </div>
@@ -52,15 +54,17 @@
       <div class="modal-content">
         <span class="close" @click="closeEditWorkModal">&times;</span>
         <h2>Edit Work Experience</h2>
-        <form @submit.prevent="updateWork">
-          <input class="editInput" type="text" v-model="workForm.companyName" placeholder="Company" required />
-          <input class="editInput" type="text" v-model="workForm.workPositionName" placeholder="Position" required />
-          <input class="editInput" type="text" v-model="workForm.fieldOfWork" placeholder="Field" required />
-          <input class="editInput" type="text" v-model="workForm.description" placeholder="Description" />
-          <input class="editInput" type="date" v-model="workForm.startDate" placeholder="Start Date" required />
-          <input class="editInput" type="date" v-model="workForm.endDate" placeholder="End Date" />
-          <button class="editButton" type="submit">Save</button>
-          <button class="deleteButton" @click="closeEditWorkModal">Cancel</button>
+        <form class="editForm" @submit.prevent="updateWork">
+          <input class="editInput height-text" type="text" v-model="workForm.companyName" placeholder="Company" required />
+          <input class="editInput height-text" type="text" v-model="workForm.workPositionName" placeholder="Position" required />
+          <input class="editInput height-text" type="text" v-model="workForm.fieldOfWork" placeholder="Field" required />
+          <input class="editInput height-text" type="text" v-model="workForm.description" placeholder="Description" />
+          <input class="editInput height-text" type="date" v-model="workForm.startDate" placeholder="Start Date" required />
+          <input class="editInput height-text" type="date" v-model="workForm.endDate" placeholder="End Date" />
+          <div class="row editButtons edButtons">
+            <button class="textButton editButton height-text" type="submit">Save</button>
+            <button class="textButton deleteButton height-text" @click="closeEditWorkModal">Cancel</button>
+          </div>
         </form>
       </div>
     </div>
@@ -192,9 +196,13 @@ button{
 }
 
 .paper{
-  width: 80%;
-  left: 10%;
+  width: 90%;
+  left: 5%;
   position: relative;
+}
+
+.marginTop{
+  margin-top: 2rem;
 }
 
 .modal {
@@ -215,7 +223,7 @@ button{
   background-color: var(--box-color);
   padding: 20px;
   width: 80%;
-  max-width: 600px;
+  max-width: 510px;
   margin: auto;
 }
 
@@ -240,7 +248,21 @@ button{
 }
 
 .editInput{
-    background: var(--color-white);
+  background: var(--color-white);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  max-width: 9rem;
+}
+
+.editForm{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.editButtons{
+  border-radius: 1rem;
 }
 
 .edButtons{
@@ -317,15 +339,15 @@ button{
   }
 
   .wrapper{
-    display: flex;
-    align-items: start;
-    justify-content: start; 
+    display: flex; 
     flex-direction: row;
-    gap: 5%;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 2%;
   }
 
   .container{
-    min-width: 50%;
+    width: 49%;
   }
 
   .heading{

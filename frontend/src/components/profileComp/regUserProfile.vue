@@ -1,13 +1,13 @@
 <template>
-  <div v-if="userType === 'user'">
-    <div v-if="profileData">
-      <h1>Profile</h1>
-      <p>Name: {{ profileData.name }}</p>
-      <p v-if="profileData.secondName">Second name: {{ profileData.secondName }}</p>
-      <p>Surname: {{ profileData.surname }}</p>
-      <p>Age: {{ profileData.age }}</p>
-      <p>Gender: {{ profileData.gender }}</p>
-      <button @click="openEditProfile()">Edit Profile</button>
+  <div v-if="userType === 'user'" class="paper">
+    <h1 class="marginTop">Personal Info</h1>
+    <div v-if="profileData" class="container">
+      <p><div class="weight-light">Name:</div> {{ profileData.name }}</p>
+      <p v-if="profileData.secondName"><div class="weight-light">Second name:</div> {{ profileData.secondName }}</p>
+      <p><div class="weight-light">Surname:</div> {{ profileData.surname }}</p>
+      <p><div class="weight-light">Age:</div> {{ profileData.age }}</p>
+      <p><div class="weight-light">Gender:</div> {{ profileData.gender }}</p>
+      <button class="textButton editButton height-text" @click="openEditProfile()">Edit</button>
     </div>
     <div v-else-if="profileData === null">
       <p>No profile data found. Please add your profile information.</p>
@@ -22,20 +22,22 @@
       <div class="modal-content">
         <span class="close" @click="closeEditProfileModal">&times;</span>
         <h2>Edit Profile</h2>
-        <form @submit.prevent="updateProfile">
-          <input type="text" v-model="profileForm.name" placeholder="Name" required />
-          <input type="text" v-model="profileForm.secondName" placeholder="Second Name" />
-          <input type="text" v-model="profileForm.surname" placeholder="Surname" required />
-          <input type="number" v-model="profileForm.age" placeholder="Age" required />
-          <input type="text" v-model="profileForm.nationality" placeholder="Nationality" required />
-          <select v-model="profileForm.gender" required>
+        <form class="editForm background" @submit.prevent="updateProfile">
+          <input class="editInput height-text" type="text" v-model="profileForm.name" placeholder="Name" required />
+          <input class="editInput height-text" type="text" v-model="profileForm.secondName" placeholder="Second Name" />
+          <input class="editInput height-text" type="text" v-model="profileForm.surname" placeholder="Surname" required />
+          <input class="editInput height-text" type="number" v-model="profileForm.age" placeholder="Age" required />
+          <input class="editInput height-text" type="text" v-model="profileForm.nationality" placeholder="Nationality" required />
+          <select class="editInput height-text" v-model="profileForm.gender" required>
             <option value="" disabled>Select Gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
           </select>
-          <button type="submit">Save</button>
-          <button @click="closeEditProfileModal">Cancel</button>
+          <div class="row editButtons edButtons">
+            <button class="textButton editButton height-text" type="submit">Save</button>
+            <button class="textButton deleteButton height-text" @click="closeEditProfileModal">Cancel</button>
+          </div>
         </form>
       </div>
     </div>
@@ -107,7 +109,21 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+button{
+  text-align: center;
+}
+
+.paper{
+  width: 90%;
+  left: 5%;
+  position: relative;
+}
+
+.marginTop{
+  margin-top: 2rem;
+}
+
 .modal {
   display: flex;
   justify-content: center;
@@ -123,9 +139,8 @@ export default {
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: var(--box-color);
   padding: 20px;
-  border: 1px solid #888;
   width: 80%;
   max-width: 600px;
   margin: auto;
@@ -143,5 +158,123 @@ export default {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.row{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.editInput{
+  background: var(--color-white);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  max-width: 9rem;
+}
+
+.editForm{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.editButtons{
+  border-radius: 1rem;
+}
+
+.edButtons{
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: space-between; 
+}
+
+.container {
+  background: var(--box-color);
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 127, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.addButton{
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  background: var(--accent-color);
+  color: var(--color-white);
+  cursor: pointer;
+  position: relative;
+}
+
+.textButton{
+  color: var(--text-color);
+  cursor: pointer; 
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+}
+
+.editButton{
+  width: 5rem;
+  background: var(--accent-color);
+}
+
+.deleteButton{
+  width: 5rem;
+  background: var(--color-red)
+}
+
+.container p {
+  margin: 0.5rem 0;
+  display: flex;
+  gap: 0.35rem;
+}
+
+.container button {
+  display: block;
+  margin-top: 10px;
+}
+
+.container p{
+  text-align: left;
+}
+
+.wrapper{
+  display: flex;
+  align-items: start;
+  justify-content: start; 
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .addButton{
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.325rem;
+  }
+
+  .paper{
+    width: 90%;
+  }
+
+  .wrapper{
+    display: flex;
+    align-items: start;
+    justify-content: start; 
+    flex-direction: row;
+    gap: 2%;
+  }
+
+  .container{
+    min-width: 50%;
+  }
+
+  .heading{
+    gap: 1rem;
+  }
 }
 </style>
