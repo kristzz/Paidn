@@ -147,4 +147,27 @@ class PostController extends Controller
             ]);
         }
     }
+
+
+
+
+
+    public function getAllPosts()
+    {
+        $posts = Post::with('business')->get();
+        return response()->json(['status' => true, 'posts' => $posts]);
+    }
+
+    // Delete a post by ID (for admin)
+    public function deletePostById($id)
+    {
+        $post = Post::find($id);
+
+        if ($post) {
+            $post->delete();
+            return response()->json(['status' => true, 'message' => 'Post deleted successfully']);
+        } else {
+            return response()->json(['status' => false, 'message' => 'Post not found']);
+        }
+    }
 }

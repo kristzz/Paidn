@@ -63,4 +63,15 @@ Route::group([
     Route::post('/removePhoto', [PhotoController::class, 'removePhoto']);
     Route::post('/editPhoto/{id}', [PhotoController::class, 'editPhoto']);
     Route::get('/photo/{id}', [PhotoController::class,'/getPhoto']);
+
+
+
+
+
+    Route::middleware('admin')->group(function () {
+        Route::get('/admin/users', [UserController::class, 'getAllUsers']);
+        Route::delete('/admin/users/{id}', [UserController::class, 'deleteUserById']);
+        Route::get('/admin/posts', [PostController::class, 'getAllPosts']);
+        Route::delete('/admin/posts/{id}', [PostController::class, 'deletePostById']);
+    });
 });

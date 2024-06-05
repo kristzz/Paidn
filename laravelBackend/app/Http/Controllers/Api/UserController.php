@@ -90,4 +90,25 @@ class UserController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+
+
+    public function getAllUsers()
+    {
+        $users = User::all();
+        return response()->json(['status' => true, 'users' => $users]);
+    }
+
+    // Delete a user (for admin)
+    public function deleteUserById($id)
+    {
+        $user = User::find($id);
+
+        if ($user) {
+            $user->delete();
+            return response()->json(['status' => true, 'message' => 'User deleted successfully']);
+        } else {
+            return response()->json(['status' => false, 'message' => 'User not found']);
+        }
+    }
 }
