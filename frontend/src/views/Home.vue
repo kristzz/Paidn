@@ -200,6 +200,7 @@ export default {
         if (response.data.status) {
           this.fetchPosts();
           this.resetPostForm();
+          location.reload();
         } else {
           alert(response.data.message);
         }
