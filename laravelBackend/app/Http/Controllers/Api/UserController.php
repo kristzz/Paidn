@@ -92,23 +92,40 @@ class UserController extends Controller
     }
 
 
-
-    public function getAllUsers()
+    public function getUsers()
     {
+        // Ensure the user is an admin
+        if (Auth::user()->type !== 'admin') {
+            return response()->json(['status' => false, 'message' => 'Unauthorized'], 403);
+        }
+
         $users = User::all();
-        return response()->json(['status' => true, 'users' => $users]);
+
+        return response()->json([
+            'status' => true,
+            'users' => $users
+        ]);
     }
 
-    // Delete a user (for admin)
-    public function deleteUserById($id)
+    // Admin method to delete a user by ID
+    public function deleteUserAdmin($id)
     {
+        // Ensure the user is an admin
+        if (Auth::user()->type !== 'admin') {
+            return response()->json(['status' => false, 'message' => 'Unauthorized'], 403);
+        }
+
         $user = User::find($id);
 
-        if ($user) {
+        if (!$user) {
+            return response()->json(['status' => false, 'message' => 'User not found'], 404);
+        }
+
+        try {
             $user->delete();
             return response()->json(['status' => true, 'message' => 'User deleted successfully']);
-        } else {
-            return response()->json(['status' => false, 'message' => 'User not found']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'error' => $e->getMessage()], 500);
         }
     }
 }

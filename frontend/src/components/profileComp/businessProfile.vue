@@ -8,6 +8,19 @@
       <p><div class="weight-light">Address:</div> {{ businessProfileData.businessAddress }}</p>
       <button class="textButton editButton height-text" @click="editBusinessProfile = true">Edit</button>
     </div>
+    <div v-else-if="businessProfileData  === null">
+      <h2>Create Business Profile</h2>
+      <form class="editForm background" @submit.prevent="saveBusinessProfile">
+        <input class="editInput height-text" type="text" v-model="businessProfileForm.businessName" placeholder="Business Name" required />
+        <input class="editInput height-text" type="text" v-model="businessProfileForm.businessType" placeholder="Business Type" required />
+        <input class="editInput height-text" type="text" v-model="businessProfileForm.businessDescription" placeholder="Business Description" />
+        <input class="editInput height-text" type="text" v-model="businessProfileForm.businessAddress" placeholder="Business Address" required />
+        <div class="row editButtons edButtons">
+          <button class="textButton editButton height-text" type="submit">Save</button>
+          <button class="textButton deleteButton height-text" @click="resetForm">Cancel</button>
+        </div>
+      </form>
+    </div>
     <div v-else>
       <p>Loading...</p>
     </div>

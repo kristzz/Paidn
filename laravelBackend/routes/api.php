@@ -26,6 +26,8 @@ use App\Http\Controllers\Api\PhotoController;
 // Open routes
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
+
+
 // Protected routes
 Route::group([
     "middleware" => "auth:api"
@@ -39,6 +41,11 @@ Route::group([
     Route::get('/getPosts', [PostController::class, 'getPosts']);
     Route::get('/getMyPosts', [PostController::class, 'getMyPosts']);
     Route::delete('/deletePost', [PostController::class, 'deletePost']);
+
+    Route::get('/admin/users', [UserController::class, 'getUsers']);
+Route::delete('/admin/users/{id}', [UserController::class, 'deleteUserAdmin']);
+Route::get('/admin/posts', [PostController::class, 'getPostsAdmin']);
+Route::delete('/admin/posts/{id}', [PostController::class, 'deletePostAdmin']);
 
     Route::post('/saveBusiness', [BusinessController::class, 'saveBusinessProfile']);
     Route::get('/getBusinessProfile', [BusinessController::class, 'getBusinessProfile']);
@@ -63,15 +70,4 @@ Route::group([
     Route::post('/removePhoto', [PhotoController::class, 'removePhoto']);
     Route::post('/editPhoto/{id}', [PhotoController::class, 'editPhoto']);
     Route::get('/photo/{id}', [PhotoController::class,'/getPhoto']);
-
-
-
-
-
-    Route::middleware('admin')->group(function () {
-        Route::get('/admin/users', [UserController::class, 'getAllUsers']);
-        Route::delete('/admin/users/{id}', [UserController::class, 'deleteUserById']);
-        Route::get('/admin/posts', [PostController::class, 'getAllPosts']);
-        Route::delete('/admin/posts/{id}', [PostController::class, 'deletePostById']);
-    });
 });

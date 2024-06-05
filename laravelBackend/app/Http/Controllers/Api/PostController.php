@@ -148,26 +148,40 @@ class PostController extends Controller
         }
     }
 
-
-
-
-
-    public function getAllPosts()
+    public function getPostsAdmin()
     {
+        // Ensure the user is an admin
+        if (Auth::user()->type !== 'admin') {
+            return response()->json(['status' => false, 'message' => 'Unauthorized'], 403);
+        }
+
         $posts = Post::with('business')->get();
-        return response()->json(['status' => true, 'posts' => $posts]);
+
+        return response()->json([
+            'status' => true,
+            'posts' => $posts
+        ]);
     }
 
-    // Delete a post by ID (for admin)
-    public function deletePostById($id)
+    // Admin method to delete a post by ID
+    public function deletePostAdmin($id)
     {
+        // Ensure the user is an admin
+        if (Auth::user()->type !== 'admin') {
+            return response()->json(['status' => false, 'message' => 'Unauthorized'], 403);
+        }
+
         $post = Post::find($id);
 
-        if ($post) {
+        if (!$post) {
+            return response()->json(['status' => false, 'message' => 'Post not found'], 404);
+        }
+
+        try {
             $post->delete();
             return response()->json(['status' => true, 'message' => 'Post deleted successfully']);
-        } else {
-            return response()->json(['status' => false, 'message' => 'Post not found']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'error' => $e->getMessage()], 500);
         }
     }
 }
