@@ -2,8 +2,22 @@
   <div>
     <div v-if="userType === 'user' && allPosts.length > 0" class="paper">
       <h2 class="marginTop">All Posts</h2>
+      <form class="filter-form" @submit.prevent="applyFilters">
+        <input type="text" v-model="filters.search" placeholder="Search..." class="filter-input">
+        <select v-model="filters.sortKey" class="filter-input">
+          <option value="title">Title</option>
+          <option value="salaryRangeLowest">Salary</option>
+        </select>
+        <select v-model="filters.sortOrder" class="filter-input">
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+        <input type="number" v-model="filters.minSalary" placeholder="Min Salary" class="filter-input">
+        <input type="number" v-model="filters.maxSalary" placeholder="Max Salary" class="filter-input">
+        <button type="submit" class="filter-button">Apply</button>
+      </form>
       <div class="wrapper">
-        <div v-for="post in allPosts" :key="post.id" class="container">
+        <div v-for="post in filteredPosts" :key="post.id" class="container">
           <p>{{ post.title }}</p>
           <p><span class="weight-light">Profession:</span> {{ post.profession }}</p>
           <p><span class="weight-light">Country:</span> {{ post.country }}</p>
@@ -75,6 +89,8 @@
   </div>
 </template>
 
+
+
 <script>
 import axios from 'axios';
 
@@ -99,8 +115,44 @@ export default {
       applications: [],
       showApplicationsModal: false,
       currentPostId: null,
-      applicationCount: 0
+      applicationCount: 0,
+      filters: {
+        search: '',
+        sortKey: 'title',
+        sortOrder: 'asc',
+        minSalary: 0,
+        maxSalary: 100000000
+      }
     };
+  },
+  computed: {
+    filteredPosts() {
+      let posts = this.allPosts;
+      if (this.filters.search) {
+        const search = this.filters.search.toLowerCase();
+        posts = posts.filter(post =>
+          post.title.toLowerCase().includes(search) ||
+          post.profession.toLowerCase().includes(search) ||
+          post.country.toLowerCase().includes(search) ||
+          post.location.toLowerCase().includes(search) ||
+          post.jobDesc.toLowerCase().includes(search)
+        );
+      }
+      if (this.filters.minSalary) {
+        posts = posts.filter(post => post.salaryRangeLowest >= this.filters.minSalary);
+      }
+      if (this.filters.maxSalary) {
+        posts = posts.filter(post => post.salaryRangeHighest <= this.filters.maxSalary);
+      }
+      posts = posts.sort((a, b) => {
+        let modifier = 1;
+        if (this.filters.sortOrder === 'desc') modifier = -1;
+        if (a[this.filters.sortKey] < b[this.filters.sortKey]) return -1 * modifier;
+        if (a[this.filters.sortKey] > b[this.filters.sortKey]) return 1 * modifier;
+        return 0;
+      });
+      return posts;
+    }
   },
   methods: {
     fetchPosts() {
@@ -135,6 +187,9 @@ export default {
         console.error("Error fetching my posts: ", error);
       });
     },
+    applyFilters() {
+      this.fetchPosts();
+    },
     createPost() {
       const authToken = localStorage.getItem('authToken');
       axios.post('/post', this.newPost, {
@@ -145,17 +200,19 @@ export default {
         if (response.data.status) {
           this.fetchPosts();
           this.resetPostForm();
-          location.reload();
         } else {
           alert(response.data.message);
         }
+      }).catch(error => {
+        console.error('Error creating post:', error);
       });
     },
-    openPostForm(post = null) {
+    openPostForm(post) {
       if (post) {
         this.editingPost = post;
         this.newPost = { ...post };
       } else {
+        this.editingPost = null;
         this.resetPostForm();
       }
       this.showPostForm = true;
@@ -169,7 +226,7 @@ export default {
     },
     updatePost() {
       const authToken = localStorage.getItem('authToken');
-      axios.post('/editPosts', this.newPost, {
+      axios.put(`/updatePost?id=${this.newPost.id}`, this.newPost, {
         headers: {
           Authorization: `Bearer ${authToken}`
         }
@@ -177,10 +234,11 @@ export default {
         if (response.data.status) {
           this.fetchPosts();
           this.resetPostForm();
-          location.reload();
         } else {
           alert(response.data.message);
         }
+      }).catch(error => {
+        console.error('Error updating post:', error);
       });
     },
     deletePost(postId) {
@@ -262,6 +320,8 @@ export default {
   }
 };
 </script>
+
+
 
 <style scoped>
 .paper {
