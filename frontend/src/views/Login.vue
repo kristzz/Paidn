@@ -1,6 +1,8 @@
 <template>
     <main>
       <form class="input-auth-container">
+        <legend>Login</legend>
+
         <input class="small-auth-input" type="email" placeholder="email@example.com" v-model="email">
         <input class="small-auth-input" type="password" placeholder="password" v-model="password">
         <p v-if="errorMessage" style="color: red;">{{ errorMessage }}</p> <!-- Display error message -->

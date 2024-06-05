@@ -91,12 +91,12 @@ main {
 }
 
 .state-user {
-  background-color: var(--color-black);
-  color: var(--color-white);
+  background-color: var(--color-white);
+  color: var(--color-black);
 }
 .state-business {
-  background-color: var(--color-gray);
-  color: var(--color-black);
+  background-color: var(--accent-color);
+  color: var(--color-white);
 }
 
 .stateButton {
