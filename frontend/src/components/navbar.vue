@@ -1,8 +1,8 @@
 <template>
     <nav v-if="isLoggedIn">
       <ul>
-        <li><router-link to="/home">Home</router-link></li>
-        <li><router-link to="/profile">Profile</router-link></li>
+        <li v-if="userType === 'business' || userType === 'user'"><router-link to="/home">Home</router-link></li>
+        <li v-if="userType === 'business' || userType === 'user'"><router-link to="/profile">Profile</router-link></li>
         <li><router-link to="/settings">Settings</router-link></li>
         <li v-if="userType === 'admin'"><router-link to="/admin">Admin</router-link></li>
       </ul>

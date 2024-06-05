@@ -12,7 +12,7 @@
   export default {
     data() {
         return {
-            authToken: localStorage.getItem('authToken')
+          authToken: localStorage.getItem('authToken')
         }
     },
     methods: {
