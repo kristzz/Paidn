@@ -1,57 +1,73 @@
 <template>
   <div>
-    <div v-if="userType === 'user' && allPosts.length > 0">
-      <h2>All Posts</h2>
-      <div v-for="post in allPosts" :key="post.id">
-        <p>Title: {{ post.title }}</p>
-        <p>Profession: {{ post.profession }}</p>
-        <p>Country: {{ post.country }}</p>
-        <p>Location: {{ post.location }}</p>
-        <p>Description: {{ post.jobDesc }}</p>
-        <p>Salary range: {{ post.salaryRangeLowest }}$ - {{ post.salaryRangeHighest }}$</p>
-        <button @click="applyForJob(post.id)">Apply for this job</button>
+    <div v-if="userType === 'user' && allPosts.length > 0" class="paper">
+      <h2 class="marginTop">All Posts</h2>
+      <div class="wrapper">
+        <div v-for="post in allPosts" :key="post.id" class="container">
+          <p>{{ post.title }}</p>
+          <p><span class="weight-light">Profession:</span> {{ post.profession }}</p>
+          <p><span class="weight-light">Country:</span> {{ post.country }}</p>
+          <p><span class="weight-light">Location:</span> {{ post.location }}</p>
+          <p><span class="weight-light">Description:</span> {{ post.jobDesc }}</p>
+          <p><span class="weight-light">Salary range:</span> {{ post.salaryRangeLowest }}$ - {{ post.salaryRangeHighest }}$</p>
+          <button class="textButton applyButton height-text" @click="applyForJob(post.id)">Apply to the job</button>
+        </div>
       </div>
     </div>
-    <div v-if="userType === 'business'">
-      <h2>My Posts</h2>
-      <button @click="openPostForm()">Add Post</button>
-      <div v-for="post in myPosts" :key="post.id">
-        <p>Title: {{ post.title }}</p>
-        <p>Profession: {{ post.profession }}</p>
-        <p>Country: {{ post.country }}</p>
-        <p>Location: {{ post.location }}</p>
-        <p>Description: {{ post.jobDesc }}</p>
-        <p>Salary range: {{ post.salaryRangeLowest }}$ - {{ post.salaryRangeHighest }}$</p>
-        <button @click="openPostForm(post)">Edit</button>
-        <button @click="deletePost(post.id)">Delete</button>
-        <button @click="showApplications(post.id)">Show Applications</button>
+    <div v-if="userType === 'business'" class="paper">
+      <div class="row heading marginTop">
+          <h1>Your posts</h1>
+          <button @click="openPostForm()" class="addButton">+</button>
+        </div>
+      <div class="wrapper">
+        <div v-for="post in myPosts" :key="post.id" class="container">
+          <p>{{ post.title }}</p>
+          <p><span class="weight-light">Profession:</span> {{ post.profession }}</p>
+          <p><span class="weight-light">Country:</span> {{ post.country }}</p>
+          <p><span class="weight-light">Location:</span> {{ post.location }}</p>
+          <p><span class="weight-light">Description:</span> {{ post.jobDesc }}</p>
+          <p><span class="weight-light">Salary range:</span> {{ post.salaryRangeLowest }}$ - {{ post.salaryRangeHighest }}$</p>
+          <div class="row">
+            <div class="edButtons row">
+              <button class="textButton editButton height-text" @click="openPostForm(post)">Edit</button>
+              <button class="textButton deleteButton height-text" @click="deletePost(post.id)">Delete</button>
+              <button class="textButton viewButton height-text" @click="showApplications(post.id)">Show Applicants</button>
+            </div>
+          </div>
+          
+        </div>
       </div>
-      <div v-if="showPostForm">
-        <h2>{{ editingPost ? 'Edit Post' : 'Add Post' }}</h2>
-        <form @submit.prevent="savePost">
-          <label>Title: <input v-model="newPost.title" required></label>
-          <label>Profession: <input v-model="newPost.profession" required></label>
-          <label>Description: <textarea v-model="newPost.jobDesc" required></textarea></label>
-          <label>Country: <input v-model="newPost.country" required></label>
-          <select v-model="newPost.location" required>
-            <option value="" disabled>Select Location</option>
-            <option value="On-site">On-site</option>
-            <option value="Hybrid">Hybrid</option>
-            <option value="Remote">Remote</option>
-          </select>
-          <label>Salary Range Lowest: <input type="number" v-model="newPost.salaryRangeLowest" required></label>
-          <label>Salary Range Highest: <input type="number" v-model="newPost.salaryRangeHighest" required></label>
-          <button type="submit">{{ editingPost ? 'Save' : 'Add' }}</button>
-          <button @click="cancelEdit">Cancel</button>
-        </form>
+      <div v-if="showPostForm" class="modal">
+        <div class="modal-content">
+          <span class="close" @click="cancelEdit">&times;</span>
+          <h2>{{ editingPost ? 'Edit Post' : 'Add Post' }}</h2>
+          <form @submit.prevent="savePost" class="editForm">
+            <input class="editInput height-text" v-model="newPost.title" placeholder="Title" required>
+            <input class="editInput height-text" v-model="newPost.profession" placeholder="Profession" required>
+            <input class="editInput height-text" v-model="newPost.jobDesc" placeholder="Description" required></input>
+            <input class="editInput height-text" v-model="newPost.country" placeholder="Country" required>
+            <select class="editInput height-text" v-model="newPost.location" required>
+              <option value="" disabled>Select Location</option>
+              <option value="On-site">On-site</option>
+              <option value="Hybrid">Hybrid</option>
+              <option value="Remote">Remote</option>
+            </select>
+            <input class="editInput height-text" type="number" v-model="newPost.salaryRangeLowest" placeholder="Salary Lowest" required>
+            <input class="editInput height-text" type="number" v-model="newPost.salaryRangeHighest" placeholder="Salary Highest" required>
+            <div class="row editButtons edButtons">
+              <button class="textButton editButton height-text" type="submit">{{ editingPost ? 'Save' : 'Add' }}</button>
+              <button class="textButton deleteButton height-text" @click="cancelEdit">Cancel</button>
+            </div>
+          </form>
+        </div>
       </div>
       <div v-if="showApplicationsModal" class="modal">
         <div class="modal-content">
           <span class="close" @click="closeApplicationsModal">&times;</span>
-          <h2>Applications for Post: {{ currentPostId }}</h2>
+          <h2>Applications for Post {{ currentPostId }}: total = {{ applicationCount }}</h2>
           <div v-for="application in applications" :key="application.id">
-            <p>Email: {{ application.user.email }}</p>
-            <p>Resume: <a :href="application.resumeLink" target="_blank">View Resume</a></p>
+            <p><span class="weight-light">Email:</span> {{ application.user.email }}</p>
+            <p><span class="weight-light">Resume:</span> <a :href="application.resumeLink" target="_blank">View Resume</a></p>
           </div>
         </div>
       </div>
@@ -82,7 +98,8 @@ export default {
       editingPost: null,
       applications: [],
       showApplicationsModal: false,
-      currentPostId: null
+      currentPostId: null,
+      applicationCount: 0
     };
   },
   methods: {
@@ -195,6 +212,7 @@ export default {
           this.applications = response.data.applications;
           this.currentPostId = postId;
           this.showApplicationsModal = true;
+          this.applicationCount = response.data.applications.length; 
         } else {
           alert(response.data.message);
         }
@@ -231,13 +249,10 @@ export default {
         }
       }).then(response => {
         if (response.data.status) {
-          alert('Applied successfully');
+          alert(response.data.message);
         } else {
-          alert('Failed to apply: ' + response.data.message);
+          alert(response.data.message);
         }
-      }).catch(error => {
-        console.error('Error applying for job:', error);
-        alert('An error occurred: ' + error.message);
       });
     }
   },
@@ -248,7 +263,17 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.paper {
+  width: 90%;
+  left: 5%;
+  position: relative;
+}
+
+.marginTop {
+  margin-top: 2rem;
+}
+
 .modal {
   display: flex;
   justify-content: center;
@@ -264,12 +289,12 @@ export default {
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: var(--box-color);
   padding: 20px;
-  border: 1px solid #888;
   width: 80%;
-  max-width: 600px;
+  max-width: 510px;
   margin: auto;
+  border-radius: 10px;
 }
 
 .close {
@@ -284,5 +309,182 @@ export default {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.editInput {
+  background: var(--color-white);
+  border-radius: 1rem;
+  padding: 0.5rem;
+  max-width: 9rem;
+}
+
+.editForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.editButtons {
+  border-radius: 1rem;
+}
+
+.edButtons {
+  gap: 1.5rem;
+  width: 15%;
+  justify-content: space-between;
+}
+
+.container {
+  background: var(--box-color);
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 127, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 10px;
+}
+
+.addButton {
+  border-radius: 50%;
+  height: 2rem;
+  width: 2rem;
+  background: var(--accent-color);
+  color: var(--color-white);
+  cursor: pointer;
+  font-size: 1.325rem;
+}
+
+.addButton:hover {
+  background: var(--accent-color);
+}
+
+.addWorkButton {
+  background: var(--accent-color);
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.addWorkButton:hover {
+  background: var(--accent-hover);
+}
+
+.textButton {
+  color: var(--text-color);
+  background: var(--accent-color);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+  border: none;
+  min-width: 4rem;
+}
+
+.editButton {
+  background: var(--accent-color);
+  color: var(--color-white);
+}
+
+.cancelButton {
+  background: var(--color-gray);
+  color: var(--color-white);
+}
+
+.deleteButton {
+  background: var(--color-red);
+  color: var(--color-white);
+}
+
+.viewButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  min-width: 8rem; 
+  white-space: nowrap; 
+}
+
+.container p {
+  margin: 0.5rem 0;
+  display: flex;
+  gap: 0.35rem;
+}
+
+.container button {
+  display: block;
+  margin-top: 10px;
+}
+
+.container p {
+  text-align: left;
+}
+
+.wrapper {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: column;
+}
+
+.filter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filter-input {
+  background: var(--color-white);
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.filter-button {
+  background: var(--accent-color);
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .addButton {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1.325rem;
+  }
+
+  .paper {
+    width: 60%;
+    left: 20%;
+    position: relative;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    flex-wrap: wrap;
+    gap: 2%;
+  }
+
+  .container {
+    min-width: 50%;
+  }
+
+  .heading {
+    gap: 1rem;
+  }
 }
 </style>
