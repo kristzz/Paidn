@@ -5,7 +5,7 @@ import router from './router';
 import axios from 'axios';
 
 // Set the base URL for Axios
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api';
+axios.defaults.baseURL = 'api-12dkgabrielis@kvalifikacija.rvt.lv/api';
 
 // Define a global error handler for Axios
 axios.interceptors.response.use(
